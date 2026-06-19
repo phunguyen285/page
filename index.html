@@ -53,7 +53,7 @@
     .fact{display:grid;grid-template-columns:110px 1fr;gap:1rem;align-items:start}
     .fact-label{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);padding-top:.3rem}
     .fact-body{font-size:.92rem;line-height:1.7;color:var(--text)}
-    .dot{color:var(--text-muted);margin:0 .5rem}
+    .interest-line > div,.project-line > div{padding-left:.9em;text-indent:-.9em}
     .project-line a{color:var(--accent);font-weight:700;text-decoration:none}
     .project-line a:hover{text-decoration:underline}
     .interests-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem}
@@ -100,8 +100,6 @@
     .pub-venue{font-size:.83rem;color:var(--text-muted);font-style:italic}
     .pub-badges{display:flex;gap:.3rem;margin-top:.35rem;flex-wrap:wrap}
     .badge{font-size:.67rem;padding:.1rem .48rem;border-radius:2px;font-weight:700;text-transform:uppercase}
-    .badge-review{background:#FFF8E1;color:#7B5D00}
-    .badge-progress{background:#E3F2FD;color:#0D47A1}
     .badge-pdf{background:var(--accent-light);color:var(--accent);text-decoration:none}
     .badge-pdf:hover{background:var(--accent);color:#fff}
 
@@ -233,9 +231,8 @@
           <div class="fact-label">Projects</div>
           <div class="fact-body">
             <div class="project-line">
-              <a href="https://accurateproject.eu/" target="_blank" rel="noopener">ACCURATE</a>
-              <span class="dot">·</span>
-              <a href="https://cordis.europa.eu/project/id/101299128" target="_blank" rel="noopener">euroFMX</a>
+              <div>- <a href="https://accurateproject.eu/" target="_blank" rel="noopener">ACCURATE</a></div>
+              <div>- <a href="https://cordis.europa.eu/project/id/101299128" target="_blank" rel="noopener">euroFMX</a></div>
             </div>
           </div>
         </div>
@@ -542,7 +539,6 @@ function renderPubEntry(e, prefix, num) {
   const authors = cleanAuthor(e.author || '');
   const url     = (e.url || '').trim();
   const kw      = (e.keywords || '').trim();
-  const hp      = e.howpublished || '';
 
   const parts = [];
   if (e.journal)     parts.push(`<em>${cleanTex(e.journal)}</em>`);
@@ -562,15 +558,10 @@ function renderPubEntry(e, prefix, num) {
     ? `<a href="${url}" target="_blank" rel="noopener">${title}</a>`
     : title;
 
-  let badges = '';
-  if (kw === 'R') {
-    if (hp.toLowerCase().includes('review'))   badges = '<span class="badge badge-review">Under Review</span>';
-    if (hp.toLowerCase().includes('progress')) badges = '<span class="badge badge-progress">In Progress</span>';
-  }
-
   const pdf = (e.pdf || '').trim();
-  const pdfLink = pdf
-    ? `<a class="badge badge-pdf" href="${pdf}" download>PDF &#x2193;</a>`
+  const pdfLinks = pdf
+    ? `<a class="badge badge-pdf" href="${pdf}" target="_blank" rel="noopener">View &#x2197;</a>`
+    + `<a class="badge badge-pdf" href="${pdf}" download>Download &#x2193;</a>`
     : '';
 
   return `<div class="pub-entry">
@@ -579,7 +570,7 @@ function renderPubEntry(e, prefix, num) {
       <div class="pub-title">${titleHtml}</div>
       ${authors ? `<div class="pub-authors">${authors}</div>` : ''}
       ${venue   ? `<div class="pub-venue">${venue}</div>` : ''}
-      ${(badges || pdfLink) ? `<div class="pub-badges">${badges}${pdfLink}</div>` : ''}
+      ${pdfLinks ? `<div class="pub-badges">${pdfLinks}</div>` : ''}
     </div>
   </div>`;
 }
@@ -653,7 +644,7 @@ async function init() {
   // ── Interests ──
   const interests = parseLongtable(interestTex).map(r => r.content);
   document.getElementById('interests-home').innerHTML =
-    interests.map(i => `<span>${i}</span>`).join('<span class="dot">·</span>');
+    interests.map(i => `<div>- ${i}</div>`).join('');
 
   // ── Education ──
   const edu = groupRows(parseLongtable(educationTex));
