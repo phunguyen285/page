@@ -102,6 +102,8 @@
     .badge{font-size:.67rem;padding:.1rem .48rem;border-radius:2px;font-weight:700;text-transform:uppercase}
     .badge-review{background:#FFF8E1;color:#7B5D00}
     .badge-progress{background:#E3F2FD;color:#0D47A1}
+    .badge-pdf{background:var(--accent-light);color:var(--accent);text-decoration:none}
+    .badge-pdf:hover{background:var(--accent);color:#fff}
 
     /* PROJECTS */
     .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
@@ -566,13 +568,18 @@ function renderPubEntry(e, prefix, num) {
     if (hp.toLowerCase().includes('progress')) badges = '<span class="badge badge-progress">In Progress</span>';
   }
 
+  const pdf = (e.pdf || '').trim();
+  const pdfLink = pdf
+    ? `<a class="badge badge-pdf" href="${pdf}" download>PDF &#x2193;</a>`
+    : '';
+
   return `<div class="pub-entry">
     <div class="pub-num">${prefix}${num}</div>
     <div>
       <div class="pub-title">${titleHtml}</div>
       ${authors ? `<div class="pub-authors">${authors}</div>` : ''}
       ${venue   ? `<div class="pub-venue">${venue}</div>` : ''}
-      ${badges  ? `<div class="pub-badges">${badges}</div>` : ''}
+      ${(badges || pdfLink) ? `<div class="pub-badges">${badges}${pdfLink}</div>` : ''}
     </div>
   </div>`;
 }
