@@ -16,7 +16,7 @@
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
     a{color:inherit}
 
     /* NAV */
@@ -29,7 +29,7 @@
     .nav-links a.active{color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:2px}
 
     /* PAGES */
-    .page{display:none}.page.active{display:block}
+    .page{display:none}.page.active{display:block;flex:1 0 auto}
 
     /* BANNER */
     #banner{margin-top:56px;height:260px;background:linear-gradient(135deg,#1B3A6B 0%,#2E6DA4 30%,#5BA4CF 55%,#A8D5E8 80%,#D4EAF5 100%);position:relative;overflow:hidden}
@@ -120,12 +120,18 @@
     .project-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
 
     /* PROJECT LIST */
-    .project-list{max-width:620px}
-    .project-list .row{display:flex;align-items:baseline;justify-content:space-between;gap:1.2rem;padding:1.1rem 0;border-bottom:1px solid var(--border)}
-    .project-list .row:last-child{border-bottom:none}
+    .project-list{max-width:680px}
+    .project-list .project-item{padding:1.1rem 0;border-bottom:1px solid var(--border)}
+    .project-list .project-item:last-child{border-bottom:none}
+    .project-list .row{display:flex;align-items:baseline;justify-content:space-between;gap:1.2rem}
     .project-list .name{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--accent);text-decoration:none}
     .project-list .name:hover{text-decoration:underline}
     .project-list .meta{font-size:.8rem;color:var(--text-muted);white-space:nowrap}
+    .project-list .detail{margin-top:.7rem}
+    .proj-desc{font-size:.9rem;color:var(--text-muted);line-height:1.6;margin-bottom:.6rem}
+    .video-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:680px;margin:.6rem 0;border-radius:6px;border:1px solid var(--border)}
+    .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .proj-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem}
 
     /* TABLES */
     .data-table{width:100%;border-collapse:collapse}
@@ -145,7 +151,7 @@
     .c-icon svg{width:14px;height:14px}
     .affil-block{font-family:var(--serif);font-size:1.2rem;font-weight:400;line-height:1.7}
 
-    footer{background:var(--text);color:rgba(255,255,255,.45);text-align:center;padding:1.8rem 2rem;font-size:.78rem}
+    footer{background:var(--text);color:rgba(255,255,255,.45);text-align:center;padding:1.8rem 2rem;font-size:.78rem;flex-shrink:0}
     footer a{color:rgba(255,255,255,.65);text-decoration:none}
 
     .loading{padding:2rem;text-align:center;color:var(--text-muted);font-size:.9rem}
@@ -600,15 +606,51 @@ function renderPublications(entries) {
   }).join('');
 }
 
+/* Turn a YouTube URL (youtu.be/ID, watch?v=ID, /embed/ID, /shorts/ID) or a bare
+   ID into a responsive, lazy-loaded embed. */
+function ytEmbed(urlOrId) {
+  const m = String(urlOrId).match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{6,})/);
+  const id = (m ? m[1] : String(urlOrId).trim());
+  return `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}"
+      title="YouTube video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen></iframe></div>`;
+}
+
 function renderProjects() {
   const projects = [
     { title:'ACCURATE', link:'https://accurateproject.eu/',                   meta:'EU-funded · 2024–27' },
     { title:'euroFMX',  link:'https://cordis.europa.eu/project/id/101299128', meta:'Horizon Europe · 2026–30' }
+
+    /* ── To add material to a project, give it any of these optional fields ──
+       (a project with none of them renders as a single clean row):
+
+    , { title:'ACCURATE', link:'https://accurateproject.eu/', meta:'EU-funded · 2024–27',
+        desc:'A short description or notes about the project. Basic HTML is allowed.',
+        videos:['https://youtu.be/VIDEO_ID'],                       // one or more
+        links:[ {label:'Project site', href:'https://accurateproject.eu/'},
+                {label:'Deliverable', href:'assets/projects/file.pdf', download:true} ] }
+    */
   ];
-  return projects.map(p => `<div class="row">
-      <a class="name" href="${p.link}" target="_blank" rel="noopener">${p.title}</a>
-      <span class="meta">${p.meta}</span>
-    </div>`).join('');
+
+  return projects.map(p => {
+    const desc   = p.desc ? `<div class="proj-desc">${p.desc}</div>` : '';
+    const videos = (p.videos || []).map(ytEmbed).join('');
+    const links  = (p.links || []).length
+      ? `<div class="proj-links">${(p.links).map(l =>
+          `<a class="badge badge-pdf" href="${l.href}"${l.download ? ' download' : ' target="_blank" rel="noopener"'}>${l.label} ${l.download ? '&#x2193;' : '&#x2197;'}</a>`
+        ).join('')}</div>`
+      : '';
+    const detail = (desc || videos || links)
+      ? `<div class="detail">${desc}${videos}${links}</div>` : '';
+    return `<div class="project-item">
+      <div class="row">
+        <a class="name" href="${p.link}" target="_blank" rel="noopener">${p.title}</a>
+        <span class="meta">${p.meta}</span>
+      </div>
+      ${detail}
+    </div>`;
+  }).join('');
 }
 
 /* ═══════════════════════════════════════════════════════
