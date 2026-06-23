@@ -87,6 +87,7 @@
     .filter-btn{padding:.28rem .9rem;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--sans);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;border-radius:2px;transition:all .2s}
     .filter-btn:hover{border-color:var(--accent);color:var(--accent)}
     .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    .exp-section + .exp-section,.award-section + .award-section{margin-top:2.4rem}
     .pub-group{margin-bottom:2.5rem}
     .pub-group-heading{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--accent);padding-bottom:.45rem;border-bottom:1px solid var(--border)}
     .pub-entry{display:grid;grid-template-columns:46px 1fr;column-gap:1.2rem;padding:1rem 0;border-bottom:1px solid var(--border)}
@@ -121,9 +122,7 @@
     .project-tag{font-size:.7rem;font-weight:700;padding:.15rem .55rem;border-radius:2px;border:1px solid var(--border);color:var(--text-muted)}
     .project-footer{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:auto;padding-top:.9rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
     .project-footer .pdf-links{display:flex;gap:.3rem;flex-wrap:wrap}
-    /* sub-tabs + carousel (research-card design) */
-    .tab-panel{display:none}
-    .tab-panel.active{display:block}
+    /* projects carousel */
     .carousel{display:flex;gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.25rem 0 1rem}
     .carousel .project-card{flex:0 0 300px;scroll-snap-align:start}
     .proj-head{display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:1rem}
@@ -306,14 +305,29 @@
     </div>
   </div>
   <div class="content-area">
-    <h3 class="sub-heading">Education</h3>
-    <ul class="timeline" id="edu-content"><li class="loading">Loading…</li></ul>
-    <h3 class="sub-heading">Research Experience</h3>
-    <ul class="timeline" id="research-content"><li class="loading">Loading…</li></ul>
-    <h3 class="sub-heading">Professional Experience</h3>
-    <ul class="timeline" id="prof-content"><li class="loading">Loading…</li></ul>
-    <h3 class="sub-heading">Other Experience</h3>
-    <ul class="timeline" id="other-content"><li class="loading">Loading…</li></ul>
+    <div class="pub-filters">
+      <button class="filter-btn active" data-filter="all" onclick="filterSections(this,'#page-experience .exp-section')">All</button>
+      <button class="filter-btn" data-filter="education" onclick="filterSections(this,'#page-experience .exp-section')">Education</button>
+      <button class="filter-btn" data-filter="research" onclick="filterSections(this,'#page-experience .exp-section')">Research</button>
+      <button class="filter-btn" data-filter="professional" onclick="filterSections(this,'#page-experience .exp-section')">Professional</button>
+      <button class="filter-btn" data-filter="other" onclick="filterSections(this,'#page-experience .exp-section')">Other</button>
+    </div>
+    <div class="exp-section" data-group="education">
+      <h3 class="sub-heading">Education</h3>
+      <ul class="timeline" id="edu-content"><li class="loading">Loading…</li></ul>
+    </div>
+    <div class="exp-section" data-group="research">
+      <h3 class="sub-heading">Research Experience</h3>
+      <ul class="timeline" id="research-content"><li class="loading">Loading…</li></ul>
+    </div>
+    <div class="exp-section" data-group="professional">
+      <h3 class="sub-heading">Professional Experience</h3>
+      <ul class="timeline" id="prof-content"><li class="loading">Loading…</li></ul>
+    </div>
+    <div class="exp-section" data-group="other">
+      <h3 class="sub-heading">Other Experience</h3>
+      <ul class="timeline" id="other-content"><li class="loading">Loading…</li></ul>
+    </div>
     <p style="font-size:.8rem;color:var(--text-muted);margin-top:1rem">* Expected</p>
   </div>
 </div>
@@ -328,7 +342,20 @@
     </div>
   </div>
   <div class="content-area">
-    <div id="awards-content"><div class="loading">Loading…</div></div>
+    <div class="pub-filters">
+      <button class="filter-btn active" data-filter="all" onclick="filterSections(this,'#page-awards .award-section')">All</button>
+      <button class="filter-btn" data-filter="awards" onclick="filterSections(this,'#page-awards .award-section')">Awards &amp; Grants</button>
+      <button class="filter-btn" data-filter="service" onclick="filterSections(this,'#page-awards .award-section')">Academic Service</button>
+    </div>
+    <div class="award-section" data-group="awards">
+      <h3 class="sub-heading" style="margin-top:0">Awards &amp; Grants</h3>
+      <table class="data-table" id="awards-content"></table>
+    </div>
+    <div class="award-section" data-group="service">
+      <h3 class="sub-heading">Academic Service</h3>
+      <p style="color:var(--text-muted);font-size:.9rem;margin:-.4rem 0 1.2rem">I serve as a <strong style="color:var(--text)">peer reviewer</strong> for the following journals:</p>
+      <table class="data-table" id="service-content"></table>
+    </div>
   </div>
 </div>
 
@@ -394,15 +421,16 @@ function showPage(id) {
   window.scrollTo(0, 0);
 }
 
-/* Sub-tabs: show the panel matching the clicked tab within the same .tabbed block */
-function showTab(btn, panelId) {
+/* Quick filter: within a filter bar, show only the section(s) matching the
+   clicked button (data-filter="all" shows everything) */
+function filterSections(btn, selector) {
   const bar = btn.parentElement;
-  const wrap = bar.parentElement;
   bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  wrap.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  const panel = document.getElementById(panelId);
-  if (panel) panel.classList.add('active');
+  const f = btn.dataset.filter;
+  document.querySelectorAll(selector).forEach(el => {
+    el.style.display = (f === 'all' || el.dataset.group === f) ? '' : 'none';
+  });
 }
 
 /* Projects carousel: scroll one card width left/right */
@@ -573,7 +601,7 @@ function parseBib(raw) {
   return entries;
 }
 
-function renderPubCard(e, eyebrow) {
+function renderPubEntry(e, prefix, num) {
   const title   = cleanTex(e.title || '').replace(/\.$/,'');
   const authors = cleanAuthor(e.author || '');
   const url     = (e.url || '').trim();
@@ -590,8 +618,8 @@ function renderPubCard(e, eyebrow) {
   if (e.series)      parts.push(`<em>${cleanTex(e.series)}</em>`);
   if (e.edition)     parts.push(`${e.edition} ed.`);
   if (e.note && !'CT'.includes(kw)) parts.push(cleanTex(e.note));
+  if (e.year && e.year !== 'n.d.') parts.push(e.year);
   const venue = parts.filter(Boolean).join(', ');
-  const year  = (e.year && e.year !== 'n.d.') ? e.year : '';
 
   const titleHtml = url
     ? `<a href="${url}" target="_blank" rel="noopener">${title}</a>`
@@ -603,18 +631,13 @@ function renderPubCard(e, eyebrow) {
     + `<a class="badge badge-pdf" href="${pdf}" download>Download &#x2193;</a>`
     : '';
 
-  const footer = (year || pdfLinks)
-    ? `<div class="project-footer"><span>${year}</span>${pdfLinks ? `<span class="pdf-links">${pdfLinks}</span>` : ''}</div>`
-    : '';
-
-  return `<div class="project-card">
-    <div class="project-card-top"></div>
-    <div class="project-card-body">
-      <div class="project-role">${eyebrow}</div>
-      <div class="project-title">${titleHtml}</div>
+  return `<div class="pub-entry">
+    <div class="pub-num">${prefix}${num}</div>
+    <div>
+      <div class="pub-title">${titleHtml}</div>
       ${authors ? `<div class="pub-authors">${authors}</div>` : ''}
       ${venue   ? `<div class="pub-venue">${venue}</div>` : ''}
-      ${footer}
+      ${pdfLinks ? `<div class="pub-badges">${pdfLinks}</div>` : ''}
     </div>
   </div>`;
 }
@@ -627,26 +650,30 @@ function renderPublications(entries) {
   }
 
   const sections = [
-    { kw:'R', id:'working', label:'Working Papers',       eyebrow:'Working Paper' },
-    { kw:'C', id:'conf',    label:'Conference',           eyebrow:'Conference Paper' },
-    { kw:'B', id:'book',    label:'Books &amp; Chapters', eyebrow:'Book / Chapter' },
-    { kw:'T', id:'talk',    label:'Presentations',        eyebrow:'Presentation' },
+    { kw:'R', group:'working', prefix:'W', label:'Working Papers',       heading:'Working Papers' },
+    { kw:'C', group:'conf',    prefix:'C', label:'Conference',           heading:'Peer-reviewed Conference Proceedings' },
+    { kw:'B', group:'book',    prefix:'B', label:'Books &amp; Chapters', heading:'Books &amp; Book Chapters' },
+    { kw:'T', group:'talk',    prefix:'T', label:'Presentations',        heading:'Presentations' },
   ];
 
   const avail = sections.filter(s => (byKw[s.kw] || []).length);
   if (!avail.length) return '<div class="loading">No publications yet.</div>';
 
-  const tabs = avail.map((s,i) =>
-    `<button class="filter-btn${i===0?' active':''}" onclick="showTab(this,'pub-${s.id}')">${s.label}</button>`
-  ).join('');
+  const filterBar = `<div class="pub-filters">
+    <button class="filter-btn active" data-filter="all" onclick="filterSections(this,'#page-publications .pub-group')">All</button>
+    ${avail.map(s => `<button class="filter-btn" data-filter="${s.group}" onclick="filterSections(this,'#page-publications .pub-group')">${s.label}</button>`).join('')}
+  </div>`;
 
-  const panels = avail.map((s,i) => {
+  const groups = avail.map(s => {
     const list = (byKw[s.kw] || []).sort((a,b) => (parseInt(b.year)||0)-(parseInt(a.year)||0));
-    const cards = list.map(e => renderPubCard(e, s.eyebrow)).join('');
-    return `<div class="tab-panel${i===0?' active':''}" id="pub-${s.id}"><div class="projects-grid">${cards}</div></div>`;
+    const items = list.map((e,i) => renderPubEntry(e, s.prefix, i+1)).join('');
+    return `<div class="pub-group" data-group="${s.group}">
+      <div class="pub-group-heading">${s.heading}</div>
+      ${items}
+    </div>`;
   }).join('');
 
-  return `<div class="tabbed"><div class="pub-filters">${tabs}</div>${panels}</div>`;
+  return filterBar + groups;
 }
 
 /* Turn a YouTube URL (youtu.be/ID, watch?v=ID, /embed/ID, /shorts/ID) or a bare
@@ -703,35 +730,6 @@ function renderProjects() {
     <div id="project-media"></div>`;
 }
 
-/* A simple research card: eyebrow + title + optional date footer */
-function renderCard(eyebrow, title, date) {
-  return `<div class="project-card">
-    <div class="project-card-top"></div>
-    <div class="project-card-body">
-      <div class="project-role">${eyebrow}</div>
-      <div class="project-title">${title}</div>
-      ${date ? `<div class="project-footer"><span>${date}</span></div>` : ''}
-    </div>
-  </div>`;
-}
-
-/* Awards page: two sub-tabs (Awards & Grants / Academic Service) of cards */
-function renderAwardsPage(awards, service) {
-  const aCards = awards.map(a => renderCard('Award / Grant', a.content, a.year)).join('');
-  const sCards = service.map(s => renderCard('Peer Review', s.content, s.year)).join('');
-  return `<div class="tabbed">
-    <div class="pub-filters">
-      <button class="filter-btn active" onclick="showTab(this,'aw-awards')">Awards &amp; Grants</button>
-      <button class="filter-btn" onclick="showTab(this,'aw-service')">Academic Service</button>
-    </div>
-    <div class="tab-panel active" id="aw-awards"><div class="projects-grid">${aCards}</div></div>
-    <div class="tab-panel" id="aw-service">
-      <p style="color:var(--text-muted);font-size:.9rem;margin:-.2rem 0 1.2rem">I serve as a <strong style="color:var(--text)">peer reviewer</strong> for the following journals:</p>
-      <div class="projects-grid">${sCards}</div>
-    </div>
-  </div>`;
-}
-
 /* ═══════════════════════════════════════════════════════
    FETCH & RENDER ALL DATA
 ═══════════════════════════════════════════════════════ */
@@ -779,10 +777,15 @@ async function init() {
   document.getElementById('prof-content').innerHTML     = renderTimeline(expProf);
   document.getElementById('other-content').innerHTML    = renderTimeline(expOther);
 
-  // ── Awards & Academic Service (tabbed cards) ──
-  const awards  = parseLongtable(awardsTex);
+  // ── Awards ──
+  const awards = parseLongtable(awardsTex);
+  document.getElementById('awards-content').innerHTML =
+    awards.map(a => `<tr><td>${a.year}</td><td>${a.content}</td></tr>`).join('');
+
+  // ── Service ──
   const service = parseLongtable(serviceTex);
-  document.getElementById('awards-content').innerHTML = renderAwardsPage(awards, service);
+  document.getElementById('service-content').innerHTML =
+    service.map(s => `<tr><td>${s.year}</td><td>${s.content}</td></tr>`).join('');
 
   // ── Publications ──
   const bibEntries = parseBib(bibRaw);
