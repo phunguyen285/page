@@ -105,19 +105,33 @@
 
     /* PROJECTS */
     .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
-    .project-card{border:1px solid var(--border);border-radius:4px;overflow:hidden;background:var(--bg);transition:box-shadow .2s,transform .2s}
+    .project-card{border:1px solid var(--border);border-radius:4px;overflow:hidden;background:var(--bg);transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column}
     .project-card:hover{box-shadow:0 8px 28px rgba(0,0,0,.09);transform:translateY(-2px)}
-    .project-card-top{height:7px}
+    .project-card-top{height:7px;background:var(--accent)}
     .project-card-top.funded{background:linear-gradient(90deg,#1B3A6B,#3B6CC5)}
     .project-card-top.phd{background:linear-gradient(90deg,#1B5F7A,#38A0BE)}
     .project-card-top.collab{background:linear-gradient(90deg,#5A3D7A,#9B6FC5)}
-    .project-card-body{padding:1.3rem 1.4rem 1.5rem}
+    .project-card-body{padding:1.3rem 1.4rem 1.5rem;flex:1;display:flex;flex-direction:column}
     .project-role{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:.5rem}
     .project-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;line-height:1.3;margin-bottom:.6rem}
+    .project-title a{color:inherit;text-decoration:none}
+    .project-title a:hover{color:var(--accent)}
     .project-desc{font-size:.875rem;color:var(--text-muted);line-height:1.65;margin-bottom:.8rem}
     .project-meta{display:flex;flex-wrap:wrap;gap:.4rem}
     .project-tag{font-size:.7rem;font-weight:700;padding:.15rem .55rem;border-radius:2px;border:1px solid var(--border);color:var(--text-muted)}
-    .project-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
+    .project-footer{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:auto;padding-top:.9rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
+    .project-footer .pdf-links{display:flex;gap:.3rem;flex-wrap:wrap}
+    /* sub-tabs + carousel (research-card design) */
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .carousel{display:flex;gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.25rem 0 1rem}
+    .carousel .project-card{flex:0 0 300px;scroll-snap-align:start}
+    .proj-head{display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:1rem}
+    .carousel-nav-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--accent);background:#fff;color:var(--accent);font-size:1.25rem;line-height:1;cursor:pointer;transition:opacity .2s}
+    .carousel-nav-btn.next{background:var(--accent);color:#fff}
+    .carousel-nav-btn:hover{opacity:.8}
+    #project-media{margin-top:1.2rem}
+    #project-media:empty{display:none}
 
     /* PROJECT LIST */
     .project-list{max-width:680px}
@@ -276,7 +290,7 @@
     </div>
   </div>
   <div class="content-area">
-    <div class="project-list" id="projects-content">
+    <div id="projects-content">
       <div class="loading">Loading projects…</div>
     </div>
   </div>
@@ -314,11 +328,7 @@
     </div>
   </div>
   <div class="content-area">
-    <h3 class="sub-heading" style="margin-top:0">Awards &amp; Grants</h3>
-    <table class="data-table" id="awards-content"></table>
-    <h3 class="sub-heading">Academic Service</h3>
-    <p style="color:var(--text-muted);font-size:.9rem;margin:-.4rem 0 1.2rem">I serve as a <strong style="color:var(--text)">peer reviewer</strong> for the following journals:</p>
-    <table class="data-table" id="service-content"></table>
+    <div id="awards-content"><div class="loading">Loading…</div></div>
   </div>
 </div>
 
@@ -382,6 +392,29 @@ function showPage(id) {
     a.classList.toggle('active', a.getAttribute('onclick') === "showPage('" + id + "')");
   });
   window.scrollTo(0, 0);
+}
+
+/* Sub-tabs: show the panel matching the clicked tab within the same .tabbed block */
+function showTab(btn, panelId) {
+  const bar = btn.parentElement;
+  const wrap = bar.parentElement;
+  bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  wrap.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(panelId);
+  if (panel) panel.classList.add('active');
+}
+
+/* Projects carousel: scroll one card width left/right */
+function scrollCarousel(dir) {
+  const c = document.getElementById('proj-carousel');
+  if (c) c.scrollBy({ left: dir * 320, behavior: 'smooth' });
+}
+
+/* Play a project's YouTube video inline below the carousel */
+function playVideo(url) {
+  const m = document.getElementById('project-media');
+  if (m) { m.innerHTML = ytEmbed(url); m.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 }
 
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -540,7 +573,7 @@ function parseBib(raw) {
   return entries;
 }
 
-function renderPubEntry(e, prefix, num) {
+function renderPubCard(e, eyebrow) {
   const title   = cleanTex(e.title || '').replace(/\.$/,'');
   const authors = cleanAuthor(e.author || '');
   const url     = (e.url || '').trim();
@@ -557,8 +590,8 @@ function renderPubEntry(e, prefix, num) {
   if (e.series)      parts.push(`<em>${cleanTex(e.series)}</em>`);
   if (e.edition)     parts.push(`${e.edition} ed.`);
   if (e.note && !'CT'.includes(kw)) parts.push(cleanTex(e.note));
-  if (e.year && e.year !== 'n.d.') parts.push(e.year);
   const venue = parts.filter(Boolean).join(', ');
+  const year  = (e.year && e.year !== 'n.d.') ? e.year : '';
 
   const titleHtml = url
     ? `<a href="${url}" target="_blank" rel="noopener">${title}</a>`
@@ -570,13 +603,18 @@ function renderPubEntry(e, prefix, num) {
     + `<a class="badge badge-pdf" href="${pdf}" download>Download &#x2193;</a>`
     : '';
 
-  return `<div class="pub-entry">
-    <div class="pub-num">${prefix}${num}</div>
-    <div>
-      <div class="pub-title">${titleHtml}</div>
+  const footer = (year || pdfLinks)
+    ? `<div class="project-footer"><span>${year}</span>${pdfLinks ? `<span class="pdf-links">${pdfLinks}</span>` : ''}</div>`
+    : '';
+
+  return `<div class="project-card">
+    <div class="project-card-top"></div>
+    <div class="project-card-body">
+      <div class="project-role">${eyebrow}</div>
+      <div class="project-title">${titleHtml}</div>
       ${authors ? `<div class="pub-authors">${authors}</div>` : ''}
       ${venue   ? `<div class="pub-venue">${venue}</div>` : ''}
-      ${pdfLinks ? `<div class="pub-badges">${pdfLinks}</div>` : ''}
+      ${footer}
     </div>
   </div>`;
 }
@@ -589,21 +627,26 @@ function renderPublications(entries) {
   }
 
   const sections = [
-    { kw:'R', group:'working', prefix:'W', heading:'Working Papers' },
-    { kw:'C', group:'conf',    prefix:'C', heading:'Peer-reviewed Conference Proceedings' },
-    { kw:'B', group:'book',    prefix:'B', heading:'Books &amp; Book Chapters' },
-    { kw:'T', group:'talk',    prefix:'T', heading:'Presentations' },
+    { kw:'R', id:'working', label:'Working Papers',       eyebrow:'Working Paper' },
+    { kw:'C', id:'conf',    label:'Conference',           eyebrow:'Conference Paper' },
+    { kw:'B', id:'book',    label:'Books &amp; Chapters', eyebrow:'Book / Chapter' },
+    { kw:'T', id:'talk',    label:'Presentations',        eyebrow:'Presentation' },
   ];
 
-  return sections.map(s => {
+  const avail = sections.filter(s => (byKw[s.kw] || []).length);
+  if (!avail.length) return '<div class="loading">No publications yet.</div>';
+
+  const tabs = avail.map((s,i) =>
+    `<button class="filter-btn${i===0?' active':''}" onclick="showTab(this,'pub-${s.id}')">${s.label}</button>`
+  ).join('');
+
+  const panels = avail.map((s,i) => {
     const list = (byKw[s.kw] || []).sort((a,b) => (parseInt(b.year)||0)-(parseInt(a.year)||0));
-    if (!list.length) return '';
-    const items = list.map((e,i) => renderPubEntry(e, s.prefix, i+1)).join('');
-    return `<div class="pub-group" data-group="${s.group}">
-      <div class="pub-group-heading">${s.heading}</div>
-      ${items}
-    </div>`;
+    const cards = list.map(e => renderPubCard(e, s.eyebrow)).join('');
+    return `<div class="tab-panel${i===0?' active':''}" id="pub-${s.id}"><div class="projects-grid">${cards}</div></div>`;
   }).join('');
+
+  return `<div class="tabbed"><div class="pub-filters">${tabs}</div>${panels}</div>`;
 }
 
 /* Turn a YouTube URL (youtu.be/ID, watch?v=ID, /embed/ID, /shorts/ID) or a bare
@@ -622,35 +665,71 @@ function renderProjects() {
     { title:'ACCURATE', link:'https://accurateproject.eu/',                   meta:'EU-funded · 2024–27' },
     { title:'euroFMX',  link:'https://cordis.europa.eu/project/id/101299128', meta:'Horizon Europe · 2026–30' }
 
-    /* ── To add material to a project, give it any of these optional fields ──
-       (a project with none of them renders as a single clean row):
+    /* ── To add material to a project card, give it any of these optional fields
+       (a project with none of them still renders as a clean card):
 
     , { title:'ACCURATE', link:'https://accurateproject.eu/', meta:'EU-funded · 2024–27',
         desc:'A short description or notes about the project. Basic HTML is allowed.',
-        videos:['https://youtu.be/VIDEO_ID'],                       // one or more
+        videos:['https://youtu.be/VIDEO_ID'],          // shows a "Watch ▶" chip; plays inline below the carousel
         links:[ {label:'Project site', href:'https://accurateproject.eu/'},
                 {label:'Deliverable', href:'assets/projects/file.pdf', download:true} ] }
     */
   ];
 
-  return projects.map(p => {
-    const desc   = p.desc ? `<div class="proj-desc">${p.desc}</div>` : '';
-    const videos = (p.videos || []).map(ytEmbed).join('');
-    const links  = (p.links || []).length
-      ? `<div class="proj-links">${(p.links).map(l =>
-          `<a class="badge badge-pdf" href="${l.href}"${l.download ? ' download' : ' target="_blank" rel="noopener"'}>${l.label} ${l.download ? '&#x2193;' : '&#x2197;'}</a>`
-        ).join('')}</div>`
-      : '';
-    const detail = (desc || videos || links)
-      ? `<div class="detail">${desc}${videos}${links}</div>` : '';
-    return `<div class="project-item">
-      <div class="row">
-        <a class="name" href="${p.link}" target="_blank" rel="noopener">${p.title}</a>
-        <span class="meta">${p.meta}</span>
+  const cards = projects.map(p => {
+    const desc  = p.desc ? `<div class="project-desc">${p.desc}</div>` : '';
+    const chips = [];
+    (p.links || []).forEach(l =>
+      chips.push(`<a class="badge badge-pdf" href="${l.href}"${l.download ? ' download' : ' target="_blank" rel="noopener"'}>${l.label} ${l.download ? '&#x2193;' : '&#x2197;'}</a>`));
+    (p.videos || []).forEach(v =>
+      chips.push(`<a class="badge badge-pdf" href="#" onclick="playVideo('${v}');return false">Watch &#x25B6;</a>`));
+    const footer = `<div class="project-footer"><span>${p.meta || ''}</span>${chips.length ? `<span class="pdf-links">${chips.join('')}</span>` : ''}</div>`;
+    return `<div class="project-card">
+      <div class="project-card-top"></div>
+      <div class="project-card-body">
+        <div class="project-role">Research Project</div>
+        <div class="project-title"><a href="${p.link}" target="_blank" rel="noopener">${p.title}</a></div>
+        ${desc}
+        ${footer}
       </div>
-      ${detail}
     </div>`;
   }).join('');
+
+  return `<div class="proj-head">
+      <button class="carousel-nav-btn prev" onclick="scrollCarousel(-1)" aria-label="Previous">&#x2039;</button>
+      <button class="carousel-nav-btn next" onclick="scrollCarousel(1)" aria-label="Next">&#x203A;</button>
+    </div>
+    <div class="carousel" id="proj-carousel">${cards}</div>
+    <div id="project-media"></div>`;
+}
+
+/* A simple research card: eyebrow + title + optional date footer */
+function renderCard(eyebrow, title, date) {
+  return `<div class="project-card">
+    <div class="project-card-top"></div>
+    <div class="project-card-body">
+      <div class="project-role">${eyebrow}</div>
+      <div class="project-title">${title}</div>
+      ${date ? `<div class="project-footer"><span>${date}</span></div>` : ''}
+    </div>
+  </div>`;
+}
+
+/* Awards page: two sub-tabs (Awards & Grants / Academic Service) of cards */
+function renderAwardsPage(awards, service) {
+  const aCards = awards.map(a => renderCard('Award / Grant', a.content, a.year)).join('');
+  const sCards = service.map(s => renderCard('Peer Review', s.content, s.year)).join('');
+  return `<div class="tabbed">
+    <div class="pub-filters">
+      <button class="filter-btn active" onclick="showTab(this,'aw-awards')">Awards &amp; Grants</button>
+      <button class="filter-btn" onclick="showTab(this,'aw-service')">Academic Service</button>
+    </div>
+    <div class="tab-panel active" id="aw-awards"><div class="projects-grid">${aCards}</div></div>
+    <div class="tab-panel" id="aw-service">
+      <p style="color:var(--text-muted);font-size:.9rem;margin:-.2rem 0 1.2rem">I serve as a <strong style="color:var(--text)">peer reviewer</strong> for the following journals:</p>
+      <div class="projects-grid">${sCards}</div>
+    </div>
+  </div>`;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -700,15 +779,10 @@ async function init() {
   document.getElementById('prof-content').innerHTML     = renderTimeline(expProf);
   document.getElementById('other-content').innerHTML    = renderTimeline(expOther);
 
-  // ── Awards ──
-  const awards = parseLongtable(awardsTex);
-  document.getElementById('awards-content').innerHTML =
-    awards.map(a => `<tr><td>${a.year}</td><td>${a.content}</td></tr>`).join('');
-
-  // ── Service ──
+  // ── Awards & Academic Service (tabbed cards) ──
+  const awards  = parseLongtable(awardsTex);
   const service = parseLongtable(serviceTex);
-  document.getElementById('service-content').innerHTML =
-    service.map(s => `<tr><td>${s.year}</td><td>${s.content}</td></tr>`).join('');
+  document.getElementById('awards-content').innerHTML = renderAwardsPage(awards, service);
 
   // ── Publications ──
   const bibEntries = parseBib(bibRaw);
