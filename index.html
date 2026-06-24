@@ -15,7 +15,10 @@
       --max:960px;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    /* Always reserve the vertical scrollbar gutter so centered content (nav,
+       page header, body) does not shift sideways when switching between short
+       pages (no scrollbar) and tall pages (scrollbar). */
+    html{scroll-behavior:smooth;overflow-y:scroll;scrollbar-gutter:stable}
     body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
     a{color:inherit}
 
