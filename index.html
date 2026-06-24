@@ -104,14 +104,8 @@
     .badge-pdf{background:var(--accent-light);color:var(--accent);text-decoration:none}
     .badge-pdf:hover{background:var(--accent);color:#fff}
 
-    /* PROJECTS */
-    .project-list .project-item{padding:1.1rem 0;border-bottom:1px solid var(--border)}
-    .project-list .project-item:last-child{border-bottom:none}
-    .project-list .row{display:flex;align-items:baseline;justify-content:space-between;gap:1.2rem}
-    .project-list .name{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--accent);text-decoration:none}
-    .project-list .name:hover{text-decoration:underline}
-    .project-list .meta{font-size:.8rem;color:var(--text-muted);white-space:nowrap}
-    .project-list .detail{margin-top:.7rem}
+    /* PROJECTS (uses the shared .data-table layout, like Awards) */
+    #projects-content td:first-child{white-space:nowrap}
     .proj-desc{font-size:.9rem;color:var(--text-muted);line-height:1.6;margin-bottom:.6rem}
     .video-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:680px;margin:.6rem 0;border-radius:6px;border:1px solid var(--border)}
     .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -260,7 +254,7 @@
     </div>
   </div>
   <div class="content-area">
-    <div class="project-list" id="projects-content">
+    <div id="projects-content">
       <div class="loading">Loading projects…</div>
     </div>
   </div>
@@ -648,13 +642,13 @@ function ytEmbed(urlOrId) {
 
 function renderProjects() {
   const projects = [
-    { title:'ACCURATE', link:'https://accurateproject.eu/',                   meta:'EU-funded · 2024–27' },
-    { title:'euroFMX',  link:'https://cordis.europa.eu/project/id/101299128', meta:'Horizon Europe · 2026–30' }
+    { title:'ACCURATE', link:'https://accurateproject.eu/',                   year:'2024–27', funder:'EU-funded' },
+    { title:'euroFMX',  link:'https://cordis.europa.eu/project/id/101299128', year:'2026–30', funder:'Horizon Europe' }
 
     /* ── To add material to a project, give it any of these optional fields ──
-       (a project with none of them renders as a single clean row):
+       (a project with none of them renders as a single year | title row):
 
-    , { title:'ACCURATE', link:'https://accurateproject.eu/', meta:'EU-funded · 2024–27',
+    , { title:'ACCURATE', link:'https://accurateproject.eu/', year:'2024–27', funder:'EU-funded',
         desc:'A short description or notes about the project. Basic HTML is allowed.',
         videos:['https://youtu.be/VIDEO_ID'],          // one or more, embedded inline
         links:[ {label:'Project site', href:'https://accurateproject.eu/'},
@@ -662,7 +656,10 @@ function renderProjects() {
     */
   ];
 
-  return projects.map(p => {
+  // Same .data-table layout as the Awards page: year | project
+  const rows = projects.map(p => {
+    const title  = `<a href="${p.link}" target="_blank" rel="noopener"><strong>${p.title}</strong></a>`;
+    const funder = p.funder ? ` — ${p.funder}` : '';
     const desc   = p.desc ? `<div class="proj-desc">${p.desc}</div>` : '';
     const videos = (p.videos || []).map(ytEmbed).join('');
     const links  = (p.links || []).length
@@ -670,16 +667,10 @@ function renderProjects() {
           `<a class="badge badge-pdf" href="${l.href}"${l.download ? ' download' : ' target="_blank" rel="noopener"'}>${l.label} ${l.download ? '&#x2193;' : '&#x2197;'}</a>`
         ).join('')}</div>`
       : '';
-    const detail = (desc || videos || links)
-      ? `<div class="detail">${desc}${videos}${links}</div>` : '';
-    return `<div class="project-item">
-      <div class="row">
-        <a class="name" href="${p.link}" target="_blank" rel="noopener">${p.title}</a>
-        <span class="meta">${p.meta}</span>
-      </div>
-      ${detail}
-    </div>`;
+    return `<tr><td>${p.year}</td><td>${title}${funder}${desc}${videos}${links}</td></tr>`;
   }).join('');
+
+  return `<table class="data-table">${rows}</table>`;
 }
 
 /* ═══════════════════════════════════════════════════════
