@@ -105,34 +105,6 @@
     .badge-pdf:hover{background:var(--accent);color:#fff}
 
     /* PROJECTS */
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
-    .project-card{border:1px solid var(--border);border-radius:4px;overflow:hidden;background:var(--bg);transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column}
-    .project-card:hover{box-shadow:0 8px 28px rgba(0,0,0,.09);transform:translateY(-2px)}
-    .project-card-top{height:7px;background:var(--accent)}
-    .project-card-top.funded{background:linear-gradient(90deg,#1B3A6B,#3B6CC5)}
-    .project-card-top.phd{background:linear-gradient(90deg,#1B5F7A,#38A0BE)}
-    .project-card-top.collab{background:linear-gradient(90deg,#5A3D7A,#9B6FC5)}
-    .project-card-body{padding:1.3rem 1.4rem 1.5rem;flex:1;display:flex;flex-direction:column}
-    .project-role{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:.5rem}
-    .project-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;line-height:1.3;margin-bottom:.6rem}
-    .project-title a{color:inherit;text-decoration:none}
-    .project-title a:hover{color:var(--accent)}
-    .project-desc{font-size:.875rem;color:var(--text-muted);line-height:1.65;margin-bottom:.8rem}
-    .project-meta{display:flex;flex-wrap:wrap;gap:.4rem}
-    .project-tag{font-size:.7rem;font-weight:700;padding:.15rem .55rem;border-radius:2px;border:1px solid var(--border);color:var(--text-muted)}
-    .project-footer{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:auto;padding-top:.9rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
-    .project-footer .pdf-links{display:flex;gap:.3rem;flex-wrap:wrap}
-    /* projects carousel */
-    .carousel{display:flex;gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.25rem 0 1rem}
-    .carousel .project-card{flex:0 0 300px;scroll-snap-align:start}
-    .proj-head{display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:1rem}
-    .carousel-nav-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--accent);background:#fff;color:var(--accent);font-size:1.25rem;line-height:1;cursor:pointer;transition:opacity .2s}
-    .carousel-nav-btn.next{background:var(--accent);color:#fff}
-    .carousel-nav-btn:hover{opacity:.8}
-    #project-media{margin-top:1.2rem}
-    #project-media:empty{display:none}
-
-    /* PROJECT LIST */
     .project-list{max-width:680px}
     .project-list .project-item{padding:1.1rem 0;border-bottom:1px solid var(--border)}
     .project-list .project-item:last-child{border-bottom:none}
@@ -289,7 +261,7 @@
     </div>
   </div>
   <div class="content-area">
-    <div id="projects-content">
+    <div class="project-list" id="projects-content">
       <div class="loading">Loading projects…</div>
     </div>
   </div>
@@ -431,18 +403,6 @@ function filterSections(btn, selector) {
   document.querySelectorAll(selector).forEach(el => {
     el.style.display = (f === 'all' || el.dataset.group === f) ? '' : 'none';
   });
-}
-
-/* Projects carousel: scroll one card width left/right */
-function scrollCarousel(dir) {
-  const c = document.getElementById('proj-carousel');
-  if (c) c.scrollBy({ left: dir * 320, behavior: 'smooth' });
-}
-
-/* Play a project's YouTube video inline below the carousel */
-function playVideo(url) {
-  const m = document.getElementById('project-media');
-  if (m) { m.innerHTML = ytEmbed(url); m.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 }
 
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -692,42 +652,35 @@ function renderProjects() {
     { title:'ACCURATE', link:'https://accurateproject.eu/',                   meta:'EU-funded · 2024–27' },
     { title:'euroFMX',  link:'https://cordis.europa.eu/project/id/101299128', meta:'Horizon Europe · 2026–30' }
 
-    /* ── To add material to a project card, give it any of these optional fields
-       (a project with none of them still renders as a clean card):
+    /* ── To add material to a project, give it any of these optional fields ──
+       (a project with none of them renders as a single clean row):
 
     , { title:'ACCURATE', link:'https://accurateproject.eu/', meta:'EU-funded · 2024–27',
         desc:'A short description or notes about the project. Basic HTML is allowed.',
-        videos:['https://youtu.be/VIDEO_ID'],          // shows a "Watch ▶" chip; plays inline below the carousel
+        videos:['https://youtu.be/VIDEO_ID'],          // one or more, embedded inline
         links:[ {label:'Project site', href:'https://accurateproject.eu/'},
                 {label:'Deliverable', href:'assets/projects/file.pdf', download:true} ] }
     */
   ];
 
-  const cards = projects.map(p => {
-    const desc  = p.desc ? `<div class="project-desc">${p.desc}</div>` : '';
-    const chips = [];
-    (p.links || []).forEach(l =>
-      chips.push(`<a class="badge badge-pdf" href="${l.href}"${l.download ? ' download' : ' target="_blank" rel="noopener"'}>${l.label} ${l.download ? '&#x2193;' : '&#x2197;'}</a>`));
-    (p.videos || []).forEach(v =>
-      chips.push(`<a class="badge badge-pdf" href="#" onclick="playVideo('${v}');return false">Watch &#x25B6;</a>`));
-    const footer = `<div class="project-footer"><span>${p.meta || ''}</span>${chips.length ? `<span class="pdf-links">${chips.join('')}</span>` : ''}</div>`;
-    return `<div class="project-card">
-      <div class="project-card-top"></div>
-      <div class="project-card-body">
-        <div class="project-role">Research Project</div>
-        <div class="project-title"><a href="${p.link}" target="_blank" rel="noopener">${p.title}</a></div>
-        ${desc}
-        ${footer}
+  return projects.map(p => {
+    const desc   = p.desc ? `<div class="proj-desc">${p.desc}</div>` : '';
+    const videos = (p.videos || []).map(ytEmbed).join('');
+    const links  = (p.links || []).length
+      ? `<div class="proj-links">${(p.links).map(l =>
+          `<a class="badge badge-pdf" href="${l.href}"${l.download ? ' download' : ' target="_blank" rel="noopener"'}>${l.label} ${l.download ? '&#x2193;' : '&#x2197;'}</a>`
+        ).join('')}</div>`
+      : '';
+    const detail = (desc || videos || links)
+      ? `<div class="detail">${desc}${videos}${links}</div>` : '';
+    return `<div class="project-item">
+      <div class="row">
+        <a class="name" href="${p.link}" target="_blank" rel="noopener">${p.title}</a>
+        <span class="meta">${p.meta}</span>
       </div>
+      ${detail}
     </div>`;
   }).join('');
-
-  return `<div class="proj-head">
-      <button class="carousel-nav-btn prev" onclick="scrollCarousel(-1)" aria-label="Previous">&#x2039;</button>
-      <button class="carousel-nav-btn next" onclick="scrollCarousel(1)" aria-label="Next">&#x203A;</button>
-    </div>
-    <div class="carousel" id="proj-carousel">${cards}</div>
-    <div id="project-media"></div>`;
 }
 
 /* ═══════════════════════════════════════════════════════
