@@ -1,8 +1,9 @@
 # Papers (downloadable PDFs)
 
 Drop a paper's PDF in this folder, then point a publication entry at it from
-`cv-data/ref.bib` using a `pdf` field. The website turns that into a
-**"PDF ↓"** download button next to the entry.
+`cv-data/ref.bib` using a `pdf` field. The website turns that into two
+buttons under the entry: **View PDF** (opens it in a new tab, so the link can
+be shared) and **Download**.
 
 Example (a working paper under review):
 
