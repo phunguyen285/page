@@ -13,7 +13,7 @@
   <meta property="og:title" content="Phu Nguyen | SCOM">
   <meta property="og:description" content="Research Associate at HWR Berlin and PhD Candidate at TU Berlin — researching how to make global supply chains more resilient and efficient.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23171717'/%3E%3Cpath d='M16 5 26 10 16 15 6 10z' fill='%23e0930b'/%3E%3Cpath d='M16 11.5 26 16.5 16 21.5 6 16.5z' fill='%237c3aed'/%3E%3Cpath d='M16 18 26 23 16 28 6 23z' fill='%2314b8c4'/%3E%3C/svg%3E">
-  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Pick the view from the URL before first paint, so a deep link such as
        …/#publications never flashes the home page first. -->
@@ -28,21 +28,45 @@
 
   <style>
     /* ════════════════════════════════════════════════════════════════════
-       DESIGN SYSTEM — borrowed from SuReSuite's public pages
-       (Landing / About): Inter + JetBrains Mono, an ink-and-hairline
-       palette, one 4px radius, mono kickers, a #bf2330 accent that is only
-       ever a dot or a number, and a serif-italic tail on a statement.
+       THE DESIGN, IN FIVE RULES
 
-       Two layout breakpoints, nothing else:
-         768px  — phone ↔ desktop (navigation, hero, grids)
-         1024px — the two-pane shell (title rail beside the list)
-       (One label also changes at 900px: the bar's "CV" becomes "Download CV"
-       once there is room for it.)
-       Touch sizing follows the POINTER, not the width: anything touched with
-       a finger keeps a 44px target, whatever the screen size.
+       1. One column, set like a CV. A narrow margin column on the left holds
+          the metadata — the photo, a year, a label — and the text column
+          beside it holds everything else. Every view uses that one grid.
+       2. Content is set in a serif (Source Serif 4), like a paper. Only the
+          interface around it — navigation, years, small labels — is in a
+          sans (Inter).
+       3. Ink on white, hairline rules, and ONE accent (#bf2330), which marks
+          only what is a link or what is current. Nothing is filled, boxed or
+          shadowed.
+       4. One layout breakpoint: 768px. Below it the margin column folds
+          above the text and the navigation moves into a menu.
+       5. Touch sizing follows the POINTER, not the width: anything tapped
+          with a finger keeps a 44px target, on a phone or a tablet.
+
+       The palette, the hairlines and the phone rules come from SuReSuite's
+       design system; the typography and the single column are the CV's.
        ════════════════════════════════════════════════════════════════════ */
 
     /* ── Fonts: self-hosted, so no third-party request is made ─────────── */
+    @font-face{font-family:'Source Serif 4 Variable';font-style:normal;font-display:swap;font-weight:200 900;
+      src:url(assets/fonts/source-serif-4-latin-wght-normal.woff2) format('woff2-variations');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Source Serif 4 Variable';font-style:normal;font-display:swap;font-weight:200 900;
+      src:url(assets/fonts/source-serif-4-latin-ext-wght-normal.woff2) format('woff2-variations');
+      unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    @font-face{font-family:'Source Serif 4 Variable';font-style:normal;font-display:swap;font-weight:200 900;
+      src:url(assets/fonts/source-serif-4-vietnamese-wght-normal.woff2) format('woff2-variations');
+      unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
+    @font-face{font-family:'Source Serif 4 Variable';font-style:italic;font-display:swap;font-weight:200 900;
+      src:url(assets/fonts/source-serif-4-latin-wght-italic.woff2) format('woff2-variations');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Source Serif 4 Variable';font-style:italic;font-display:swap;font-weight:200 900;
+      src:url(assets/fonts/source-serif-4-latin-ext-wght-italic.woff2) format('woff2-variations');
+      unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    @font-face{font-family:'Source Serif 4 Variable';font-style:italic;font-display:swap;font-weight:200 900;
+      src:url(assets/fonts/source-serif-4-vietnamese-wght-italic.woff2) format('woff2-variations');
+      unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
     @font-face{font-family:'Inter Variable';font-style:normal;font-display:swap;font-weight:100 900;
       src:url(assets/fonts/inter-latin-wght-normal.woff2) format('woff2-variations');
       unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -52,68 +76,44 @@
     @font-face{font-family:'Inter Variable';font-style:normal;font-display:swap;font-weight:100 900;
       src:url(assets/fonts/inter-vietnamese-wght-normal.woff2) format('woff2-variations');
       unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
-    @font-face{font-family:'Inter Variable';font-style:italic;font-display:swap;font-weight:100 900;
-      src:url(assets/fonts/inter-latin-wght-italic.woff2) format('woff2-variations');
-      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-    @font-face{font-family:'Inter Variable';font-style:italic;font-display:swap;font-weight:100 900;
-      src:url(assets/fonts/inter-latin-ext-wght-italic.woff2) format('woff2-variations');
-      unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-    @font-face{font-family:'Inter Variable';font-style:italic;font-display:swap;font-weight:100 900;
-      src:url(assets/fonts/inter-vietnamese-wght-italic.woff2) format('woff2-variations');
-      unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
-    @font-face{font-family:'JetBrains Mono Variable';font-style:normal;font-display:swap;font-weight:100 800;
-      src:url(assets/fonts/jetbrains-mono-latin-wght-normal.woff2) format('woff2-variations');
-      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-    @font-face{font-family:'JetBrains Mono Variable';font-style:normal;font-display:swap;font-weight:100 800;
-      src:url(assets/fonts/jetbrains-mono-latin-ext-wght-normal.woff2) format('woff2-variations');
-      unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-    @font-face{font-family:'JetBrains Mono Variable';font-style:normal;font-display:swap;font-weight:100 800;
-      src:url(assets/fonts/jetbrains-mono-vietnamese-wght-normal.woff2) format('woff2-variations');
-      unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
 
     /* ── Tokens ────────────────────────────────────────────────────────── */
     :root{
       color-scheme:only light;
 
       /* The ink ladder. Nothing lighter than --muted ever carries text. */
-      --ink:#171717;      /* headings, row labels            16.9:1 on white */
+      --ink:#171717;      /* names, titles                   16.9:1 on white */
       --body:#3f3f46;     /* prose                           10.8:1          */
-      --quiet:#525252;    /* mono micro-labels                7.8:1          */
-      --muted:#6b6b6b;    /* secondary lines — the floor      5.3:1          */
+      --soft:#5c5c5c;     /* authors, venues, details         6.7:1          */
+      --muted:#6b6b6b;    /* years, labels — the floor        5.3:1          */
 
-      /* Two rule weights: --hair touches the page, --inner divides a list. */
+      /* Two rule weights: --hair opens a list, --inner divides its rows. */
       --hair:#d4d4d4;
-      --line:#e0e0e0;
       --inner:#e8e8ea;
 
       --bg:#ffffff;
-      --surface:#f5f5f5;
-      --head:#fafafa;
-
-      /* Colour is information: a dot, a number, a 2px rule — never a fill. */
+      /* The one accent. It marks a link or the current page, and nothing else. */
       --red:#bf2330;
-      --firm:#e0930b;
-      --product:#7c3aed;
-      --process:#14b8c4;
+      --red-soft:rgba(191,35,48,.4);
 
       --radius:4px;
-      --max:1152px;
+      --max:840px;
       --gutter:20px;
       --bar:56px;
-      --key:92px;         /* the year / label column, shared by every list */
+      --key:120px;        /* the margin column: photo, years, labels */
+      --gap:28px;
 
+      --serif:'Source Serif 4 Variable','Source Serif 4',Charter,'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
       --sans:'Inter Variable',Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-      --mono:'JetBrains Mono Variable','JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-      --serif:ui-serif,Georgia,Cambria,'Times New Roman',Times,serif;
       --ease:cubic-bezier(.2,0,0,1);
     }
     @media (min-width:768px){
-      :root{--gutter:24px;--bar:64px}
+      :root{--gutter:24px;--bar:60px}
     }
 
     /* ── Base ──────────────────────────────────────────────────────────── */
     *,*::before,*::after{box-sizing:border-box}
-    /* The scrollbar gutter is always reserved, so centred content does not
+    /* The scrollbar gutter is always reserved, so the centred column does not
        shift sideways between a short view and a long one. */
     html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-y:scroll;scrollbar-gutter:stable}
     body{margin:0;display:flex;flex-direction:column;
@@ -121,17 +121,21 @@
          URL bar is showing, which makes the footer jump as it retracts. */
       min-height:100vh;min-height:100svh;min-height:100dvh;
       background:var(--bg);color:var(--ink);
-      font-family:var(--sans);font-size:15px;line-height:1.6;letter-spacing:-.006em;
-      font-feature-settings:"cv11","ss01","ss03","cv02","cv04","calt","rlig";
+      font-family:var(--serif);font-size:17px;line-height:1.55;
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
-    h1,h2,h3,p,ul,ol{margin:0}
+    h1,h2,h3,p,ul,ol,address{margin:0}
     ul,ol{padding:0;list-style:none}
+    address{font-style:normal}
     a{color:inherit}
-    img,svg,canvas{display:block}
-    button{font:inherit;color:inherit;letter-spacing:inherit}
-    em{font-style:italic}
+    img,svg{display:block}
+    button{font:inherit;color:inherit}
     strong{font-weight:600}
     [hidden]{display:none!important}
+
+    /* The interface is set in the sans; everything else inherits the serif. */
+    .bar,.role,.row-key,.count,.tab,.act,.foot,.note,.footnote,.skip,.noscript{
+      font-family:var(--sans);letter-spacing:-.006em;
+      font-feature-settings:"cv11","ss01","ss03","cv02","cv04","calt","rlig"}
 
     :focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:2px}
     h1:focus{outline:none}                         /* headings take focus on navigation only */
@@ -157,62 +161,50 @@
        swap some of those for colour emoji. */
     .i{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-    /* The one uppercase treatment on the site. Everything else is sentence case. */
-    .kicker{font-family:var(--mono);font-feature-settings:"calt","liga","zero","ss01";
-      font-size:10px;line-height:1.5;font-weight:400;text-transform:uppercase;letter-spacing:.2em;color:var(--quiet)}
-    .dot{width:6px;height:6px;flex:none;border-radius:50%;background:var(--red)}
+    /* ── Links ─────────────────────────────────────────────────────────── */
+    /* Ink text, a thin red rule beneath. The rule is always there, because a
+       phone has no hover to reveal it. */
+    main a{text-decoration:underline;text-decoration-color:var(--red-soft);text-decoration-thickness:1px;text-underline-offset:3px;
+      transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+    main a:hover{color:var(--red);text-decoration-color:var(--red)}
 
-    /* Links inside running text: a quiet underline that firms up on hover.
-       Visible without hover, because a phone has none. */
-    .rows a:not(.btn),.tlink{text-decoration:underline;text-decoration-color:var(--hair);text-underline-offset:3px;
-      text-decoration-thickness:1px;transition:text-decoration-color .2s var(--ease)}
-    .rows a:not(.btn):hover,.tlink:hover{text-decoration-color:var(--ink)}
-    .tlink{display:inline-flex;align-items:center;gap:4px;color:var(--ink);font-weight:500}
-    .tlink .i{width:14px;height:14px}
-
-    /* ── Buttons ───────────────────────────────────────────────────────── */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;
-      border:1px solid transparent;border-radius:var(--radius);
-      font-family:var(--sans);font-size:14px;font-weight:500;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer;
-      transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
-    .btn-primary{background:var(--ink);border-color:var(--ink);color:#fafafa}
-    .btn-primary:hover{background:#2e2e2e;border-color:#2e2e2e}
-    .btn-outline{background:#fff;border-color:var(--line);color:var(--ink)}
-    .btn-outline:hover{background:var(--surface)}
-    .btn-lg{min-height:48px;padding:0 22px;font-size:15px}
-    .btn-sm{padding:0 12px;font-size:13px}
-    .btn .i-nudge{transition:transform .2s var(--ease)}
-    .btn:hover .i-nudge{transform:translateX(3px)}
+    /* A link that stands on its own line — "View publications", "Download". */
+    .act{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:14.5px;font-weight:500;line-height:1.35}
+    .act .i{width:15px;height:15px;transition:transform .2s var(--ease)}
+    .act:hover .i-nudge{transform:translateX(3px)}
+    @media (hover:hover) and (pointer:fine){
+      .act{min-height:30px}                         /* mouse and trackpad only */
+    }
 
     /* ── Top bar ───────────────────────────────────────────────────────── */
     .bar{position:-webkit-sticky;position:sticky;top:0;z-index:40;border-bottom:1px solid var(--hair);
-      background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+      background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
     @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
       .bar{background:#fff}
     }
     .bar[data-open="true"]{background:#fff}
     .bar-in{display:flex;align-items:center;height:var(--bar)}
-    .brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-right:auto;
-      font-size:15px;font-weight:600;letter-spacing:-.014em;text-decoration:none;white-space:nowrap}
-    .brand-tile{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--radius);background:var(--ink);
-      color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.02em}
-    .bar-actions{display:flex;align-items:center;gap:8px}
-    .menu-btn{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--line);
-      border-radius:var(--radius);background:#fff;cursor:pointer}
+    .brand{display:inline-flex;align-items:center;min-height:44px;margin-right:auto;
+      font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+    .cv{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;font-size:14px;font-weight:500;text-decoration:none}
+    .cv .i{width:15px;height:15px}
+    .menu-btn{display:grid;place-items:center;width:44px;height:44px;margin-right:-13px;padding:0;border:0;border-radius:var(--radius);
+      background:none;cursor:pointer}
+    .menu-btn .i{width:18px;height:18px}
     .menu-btn .i-close,.bar[data-open="true"] .menu-btn .i-open{display:none}
     .bar[data-open="true"] .menu-btn .i-close{display:block}
-    .cv-long{display:none}
 
     /* Phone: the six links live in a panel that drops from the bar. They are
        the SAME links the desktop bar shows — one list, restyled, so the two
        can never drift apart. */
     .nav{display:none;position:absolute;left:0;right:0;top:100%;z-index:1;
       max-height:calc(100vh - var(--bar));max-height:calc(100dvh - var(--bar));overflow-y:auto;overscroll-behavior:contain;
+      padding:0 var(--gutter) 12px;
       padding:0 max(var(--gutter),env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(var(--gutter),env(safe-area-inset-left));
       border-top:1px solid var(--inner);border-bottom:1px solid var(--hair);background:#fff}
     .bar[data-open="true"] .nav{display:block}
     .nav a{display:flex;align-items:center;justify-content:space-between;min-height:48px;border-bottom:1px solid var(--inner);
-      font-size:15px;font-weight:500;color:var(--ink);text-decoration:none}
+      font-size:15px;color:var(--ink);text-decoration:none}
     .nav a:last-child{border-bottom:0}
     .nav a[aria-current="page"]{font-weight:600}
     .nav a[aria-current="page"]::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--red)}
@@ -225,25 +217,15 @@
 
     @media (min-width:768px){
       .menu-btn,.scrim{display:none!important}
-      .brand{margin-right:0}
-      .nav,.bar[data-open="true"] .nav{display:flex;position:static;align-items:center;gap:2px;margin-left:auto;margin-right:10px;
+      .nav,.bar[data-open="true"] .nav{display:flex;position:static;align-items:center;gap:2px;margin-left:auto;
         max-height:none;overflow:visible;padding:0;border:0;background:none}
-      .nav a{min-height:44px;padding:0 11px;border:0;border-radius:var(--radius);font-size:13px;color:var(--muted);
-        transition:background-color .2s var(--ease),color .2s var(--ease)}
-      .nav a:hover{background:var(--surface);color:var(--ink)}
-      .nav a[aria-current="page"]{background:var(--surface);color:var(--ink);font-weight:500}
+      .nav a{min-height:44px;padding:0 10px;border:0;font-size:14px;color:var(--muted);transition:color .2s var(--ease)}
+      .nav a:hover{color:var(--ink)}
+      /* "You are here" is a rule under the word. */
+      .nav a[aria-current="page"]{color:var(--ink);font-weight:500;text-decoration:underline;text-decoration-color:var(--red);
+        text-decoration-thickness:1.5px;text-underline-offset:7px}
       .nav a[aria-current="page"]::after{content:none}
-      .btn-bar{background:var(--ink);border-color:var(--ink);color:#fafafa}
-      .btn-bar:hover{background:#2e2e2e;border-color:#2e2e2e}
-    }
-    @media (min-width:900px){
-      .cv-long{display:inline}
-      .nav a{padding:0 12px}
-    }
-    /* Mouse and trackpad only: the compact desktop heights. A tablet keeps 44px. */
-    @media (min-width:768px) and (hover:hover) and (pointer:fine){
-      .nav a{min-height:32px}
-      .btn-bar{min-height:32px}
+      .cv{margin-left:6px;padding-right:0}
     }
 
     /* ── Views ─────────────────────────────────────────────────────────── */
@@ -256,218 +238,123 @@
     html[data-view="projects"] #view-projects,
     html[data-view="experience"] #view-experience,
     html[data-view="awards"] #view-awards,
-    html[data-view="contact"] #view-contact{display:block;animation:view-in .22s var(--ease) both}
-    @keyframes view-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+    html[data-view="contact"] #view-contact{display:block;animation:view-in .16s ease-out both}
+    @keyframes view-in{from{opacity:0}to{opacity:1}}
+    .page{padding-top:32px;padding-bottom:56px;padding-top:clamp(28px,7vw,56px);padding-bottom:clamp(48px,11vw,88px)}
 
-    /* ── Home: hero ────────────────────────────────────────────────────── */
-    .hero{position:relative;overflow:hidden}
-    /* The network figure is drawn on a canvas that covers the hero. The script
-       measures the copy and places the figure in whatever is free at the top
-       right — beside the portrait on a phone, beside the name on a tablet,
-       beside the whole column on a desktop — so it never sits under a word. */
-    .hero-art{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none}
-    /* The red haze is two still gradients, so the canvas only has to draw the
-       figure itself — a few dozen lines a frame, which a slow phone can afford. */
-    .hero-art::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;
-      background:
-        radial-gradient(420px circle at 92% 2%,rgba(191,35,48,.09),rgba(191,35,48,.022) 34%,transparent 62%),
-        radial-gradient(clamp(180px,36vw,300px) circle at 88% 10%,rgba(191,35,48,.11),rgba(191,35,48,.035) 45%,transparent)}
-    .hero-art canvas{position:absolute;top:0;left:0;width:100%;height:100%}
-    .hero-in{position:relative;padding-top:32px;padding-bottom:40px;padding-top:clamp(28px,8vw,80px);padding-bottom:clamp(36px,9vw,72px)}
-
-    .pill{display:inline-flex;align-items:flex-start;gap:8px;max-width:100%;padding:6px 12px;border:1px solid var(--line);
-      border-radius:var(--radius);background:#fff}
-    .pill .dot{margin-top:4.5px}
-    .pill .kicker{letter-spacing:.14em}
-
-    .portrait{position:relative;width:96px;width:clamp(84px,25.6vw,112px);margin-top:18px;border-radius:var(--radius);overflow:hidden;background:var(--ink)}
+    /* ── Home: who this is ─────────────────────────────────────────────── */
+    /* Phone: the photo sits beside the name, the rest runs full width.
+       Desktop: the photo moves into the margin column and the name, the
+       introduction and the links line up with every list on the site. */
+    .intro{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;align-items:center}
+    .portrait{position:relative;width:84px;width:clamp(76px,22vw,92px);border-radius:var(--radius);overflow:hidden;background:var(--ink)}
     .portrait::before{content:"";display:block;padding-top:125%}            /* 4:5, without relying on aspect-ratio */
     .portrait img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
     .portrait-fallback{position:absolute;top:0;right:0;bottom:0;left:0;display:grid;place-items:center;
-      color:#fff;font-size:26px;font-weight:600;letter-spacing:-.03em;
-      background:radial-gradient(circle at 80% 16%,rgba(255,255,255,.24),transparent 62%)}
-    .who{margin-top:16px}
-    .name{font-size:38px;font-size:clamp(34px,10.4vw,44px);font-weight:600;line-height:1.05;letter-spacing:-.024em}
-    .role{margin-top:8px;font-size:15px;font-size:clamp(14px,3.9vw,16px);line-height:1.4;color:var(--body)}
-
-    .lede{max-width:35em;margin-top:18px;margin-top:clamp(16px,4.4vw,22px);font-size:17px;font-size:clamp(16px,4.2vw,19px);line-height:1.6;color:var(--muted)}
-    .lede strong{color:var(--ink)}
-    /* The serif-italic tail — SuReSuite's signature on a statement. */
-    .tail{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--ink);letter-spacing:0}
-
-    /* Button rows wrap rather than squeeze: the primary takes its own line on a
-       phone, the two secondaries share the next one when they fit. */
-    .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;margin-top:clamp(22px,6vw,32px)}
-    .cta .btn{flex:1 1 140px}
-    .cta .btn-primary{flex-basis:100%}
-
-    .legend{display:none}
-
+      color:#fff;font-family:var(--sans);font-size:24px;font-weight:600}
+    .who{min-width:0}
+    .name{font-size:31px;font-size:clamp(28px,8.2vw,34px);font-weight:600;line-height:1.1;letter-spacing:-.014em}
+    .role{margin-top:7px;font-size:14.5px;line-height:1.45;color:var(--body)}
+    .role span{display:block}                      /* two tidy lines beside the photo … */
+    .role .sep{display:none}
+    .bio,.links{grid-column:1 / -1}
+    .bio{margin-top:20px;font-size:17px;line-height:1.6;color:var(--body)}
+    .bio strong{color:var(--ink)}
+    .links{display:flex;flex-wrap:wrap;gap:0 24px;margin-top:10px}
     @media (min-width:768px){
-      .hero-in{display:grid;grid-template-columns:auto minmax(0,1fr);justify-items:start;align-items:center;column-gap:28px;
-        grid-template-areas:"pill pill" "photo who" "lede lede" "cta cta"}
-      .pill{grid-area:pill}
-      .pill .kicker{letter-spacing:.2em}
-      .portrait{grid-area:photo;width:clamp(112px,12.5vw,136px);margin-top:36px}
-      .portrait-fallback{font-size:34px}
-      .who{grid-area:who;margin-top:36px}
-      .name{font-size:clamp(44px,6.2vw,60px)}
-      .role{margin-top:12px;font-size:17px}
-      .lede{grid-area:lede;margin-top:32px}
-      .cta{grid-area:cta}
-      .cta .btn,.cta .btn-primary{flex:0 0 auto}
-      /* Sits under the figure; the script sets `top` once it has placed it. */
-      .legend{position:absolute;right:max(var(--gutter),env(safe-area-inset-right));display:flex;align-items:center;gap:14px;visibility:hidden;
-        font-family:var(--mono);font-size:10px;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-      .legend span{display:inline-flex;align-items:center;gap:6px}
-      .legend i{width:6px;height:6px;background:currentColor}
+      .intro{grid-template-columns:var(--key) minmax(0,1fr);column-gap:var(--gap);align-items:start}
+      .portrait{grid-row:1 / span 3;width:var(--key)}
+      .portrait-fallback{font-size:30px}
+      .who{margin-top:-5px}                        /* the name's cap line meets the photo's top edge */
+      .name{font-size:38px}
+      .role{font-size:15.5px}
+      .role span,.role .sep{display:inline}        /* … one line where there is room */
+      .bio,.links{grid-column:2}
+      .bio{margin-top:18px;font-size:18px}
+      .links{margin-top:12px}
     }
+    .facts{margin-top:32px;margin-top:clamp(28px,7vw,40px)}
+    .facts .row-key{font-weight:500;color:var(--body)}
 
-    /* ── Home: the facts strip ─────────────────────────────────────────── */
-    /* A hairline grid: the divider IS the 1px gap, so it turns horizontal by
-       itself when the two cells stack. */
-    .facts{position:relative;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--head)}
-    .facts-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;max-width:var(--max);margin:0 auto;background:var(--line)}
-    .fact{min-width:0;padding:22px var(--gutter) 12px;padding:22px max(var(--gutter),env(safe-area-inset-right)) 12px max(var(--gutter),env(safe-area-inset-left));background:var(--head)}
-    .fact-list{margin-top:12px;border-top:1px solid var(--line)}
-    .fact-list > li{border-bottom:1px solid var(--line)}
-    .fact-list > li:last-child{border-bottom:0}
-    .fact-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;column-gap:8px;min-height:48px;padding:9px 0;
-      color:var(--ink);text-decoration:none}
-    .fact-num{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
-    .fact-label{font-size:15px;font-weight:500;line-height:1.4}
-    .fact-sub{display:block;margin-top:1px;font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.04em;color:var(--quiet)}
-    a.fact-row .i{color:var(--muted);transition:color .2s var(--ease),transform .2s var(--ease)}
-    a.fact-row:hover .i{color:var(--ink);transform:translate(2px,-2px)}
-    #interests-home{min-height:193px}                 /* four rows — the strip does not jump when the list arrives */
-    @media (min-width:768px){
-      .facts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .fact{padding-top:28px;padding-bottom:20px}
-    }
-
-    /* ── Home: the six doors ───────────────────────────────────────────── */
-    .section{padding-top:36px;padding-bottom:48px;padding-top:clamp(32px,8vw,64px);padding-bottom:clamp(40px,10vw,80px)}
-    .doors{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;margin-top:14px;border:1px solid var(--line);
-      border-radius:var(--radius);overflow:hidden;background:var(--line)}
-    .door{display:grid;grid-template-columns:24px minmax(0,1fr) 16px;grid-template-areas:"num text arrow";align-items:center;column-gap:12px;
-      min-height:64px;padding:12px 16px;background:#fff;text-decoration:none;transition:background-color .2s var(--ease)}
-    .door:hover{background:var(--head)}
-    .door:focus-visible{outline-offset:-2px}
-    .door-num{grid-area:num;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
-    .door-text{grid-area:text;min-width:0}
-    .door-title{display:block;font-size:15px;font-weight:600;line-height:1.35;letter-spacing:-.012em}
-    .door-desc{display:block;margin-top:2px;font-size:13.5px;line-height:1.45;color:var(--muted)}
-    .door .i{grid-area:arrow;color:var(--muted);transition:color .2s var(--ease),transform .2s var(--ease)}
-    .door:hover .i{color:var(--ink);transform:translateX(3px)}
-    @media (min-width:768px){
-      .doors{grid-template-columns:repeat(3,minmax(0,1fr))}
-      .door{grid-template-columns:minmax(0,1fr) 16px;grid-template-areas:"num arrow" "text text";align-items:start;align-content:start;
-        row-gap:26px;min-height:0;padding:22px 24px 26px}
-      .door-title{font-size:16px}
-      .door-desc{margin-top:5px}
-    }
-
-    /* ── Inner views: the shell ────────────────────────────────────────── */
-    .view-in{padding-top:28px;padding-bottom:56px;padding-top:clamp(24px,6.5vw,44px);padding-bottom:clamp(44px,11vw,88px)}
-    .eyebrow{display:flex;align-items:center;gap:8px}
-    .view-title{margin-top:10px;font-size:29px;font-size:clamp(27px,7.4vw,34px);font-weight:600;line-height:1.1;letter-spacing:-.022em}
-    .content{min-width:0;margin-top:24px;margin-top:clamp(22px,6vw,32px)}
-    @media (min-width:1024px){
-      /* Two panes: the title and its filters stay put while the list scrolls. */
-      .view-in{display:grid;grid-template-columns:232px minmax(0,1fr);column-gap:72px;align-items:start;padding-top:56px}
-      .rail{position:-webkit-sticky;position:sticky;top:calc(var(--bar) + 40px)}
-      .view-title{font-size:30px}
-      .content{margin-top:0;max-width:800px}
-    }
-
-    /* ── Filters ───────────────────────────────────────────────────────── */
-    .filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+    /* ── Inner views: title and filters ────────────────────────────────── */
+    .page-head{margin-bottom:24px;margin-bottom:clamp(22px,6vw,30px)}
+    .title{font-size:30px;font-size:clamp(28px,7.6vw,34px);font-weight:600;line-height:1.12;letter-spacing:-.014em}
+    .lead{max-width:36em;margin-top:14px;font-size:17px;line-height:1.6;color:var(--body)}
+    /* Filters are words, not boxes: the current one is underlined. */
+    .filters{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:14px}
     .filters:empty{display:none}
-    .chip{position:relative;display:inline-flex;align-items:center;min-height:36px;padding:0 13px;border:1px solid var(--line);
-      border-radius:var(--radius);background:#fff;color:var(--body);font-size:13px;font-weight:500;line-height:1;white-space:nowrap;cursor:pointer;
-      transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
-    /* 36px to look at, 44px to touch: the hit area grows into the 8px row gap
-       above and below, so the chip does not have to. */
-    .chip::after{content:"";position:absolute;left:0;right:0;top:-4px;bottom:-4px}
-    .chip:hover{border-color:var(--muted)}
-    .chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
-    @media (min-width:1024px){
-      .filters{flex-direction:column;flex-wrap:nowrap;gap:2px;margin-top:28px;margin-left:-12px}
-      .chip{justify-content:flex-start;width:100%;min-height:44px;padding:0 12px;border-color:transparent;background:transparent;color:var(--muted);font-size:13.5px}
-      .chip::after{content:none}
-      .chip:hover{border-color:transparent;background:var(--surface);color:var(--ink)}
-      .chip[aria-pressed="true"]{border-color:transparent;background:var(--surface);color:var(--ink)}
-    }
-    @media (min-width:1024px) and (hover:hover) and (pointer:fine){
-      .chip{min-height:34px}
+    .tab{position:relative;display:inline-flex;align-items:center;min-height:32px;padding:0;border:0;background:none;
+      color:var(--muted);font-size:13.5px;font-weight:500;line-height:1;white-space:nowrap;cursor:pointer;transition:color .2s var(--ease)}
+    /* 32px to look at, 44px to touch: the hit area grows into the gaps around
+       the word, so the row does not have to. */
+    .tab::after{content:"";position:absolute;left:-14px;right:-14px;top:-6px;bottom:-6px}
+    .tab:hover{color:var(--ink)}
+    .tab[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);
+      text-decoration-thickness:1.5px;text-underline-offset:6px}
+    @media (min-width:768px){
+      .lead{font-size:18px}
     }
 
     /* ── Lists: one row grammar for every view ─────────────────────────── */
-    .group + .group{margin-top:40px;margin-top:clamp(34px,9vw,52px)}
-    .group-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:11px;border-bottom:1px solid var(--hair)}
-    .group-title{min-width:0;font-size:17px;font-size:clamp(16.5px,4.5vw,18px);font-weight:600;line-height:1.3;letter-spacing:-.012em}
-    .group-count{flex:none;font-family:var(--mono);font-size:11px;color:var(--quiet);font-variant-numeric:tabular-nums}
-    .group-note{margin-top:12px;font-size:14px;line-height:1.6;color:var(--muted)}
+    .group + .group{margin-top:36px;margin-top:clamp(32px,8vw,46px)}
+    .group-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:9px}
+    .group-title{min-width:0;font-size:19px;font-weight:600;line-height:1.3;letter-spacing:-.006em}
+    .count{flex:none;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+    /* A sentence that introduces a list reads as that list's first row. */
+    .group-note{padding:12px 0 13px;border-top:1px solid var(--hair);font-size:16px;line-height:1.55;color:var(--body)}
     .group-note strong{color:var(--ink)}
+    .group-note + .rows{border-top-color:var(--inner)}
 
-    /* Phone: the year or label sits above its entry, like a kicker.
-       Desktop: it moves into a fixed left column that every view shares. */
-    .row{display:grid;grid-template-columns:minmax(0,1fr);row-gap:5px;padding:16px 0;border-bottom:1px solid var(--inner)}
-    .rows.ruled{border-top:1px solid var(--hair)}
-    .row-key{font-family:var(--mono);font-feature-settings:"calt","liga","zero","ss01";font-size:11.5px;line-height:1.5;
-      letter-spacing:.03em;color:var(--quiet);font-variant-numeric:tabular-nums;white-space:nowrap}
-    .row-key.is-label{color:var(--red)}
+    /* Phone: the year or label sits above its entry.
+       Desktop: it moves into the margin column that every view shares. */
+    .rows{border-top:1px solid var(--hair)}
+    .row{display:grid;grid-template-columns:minmax(0,1fr);row-gap:3px;padding:14px 0;border-bottom:1px solid var(--inner)}
+    .row-key{font-size:13px;font-weight:400;line-height:1.5;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
     .row-key sup{font-size:1em;line-height:0;vertical-align:baseline;margin-left:1px}
     .row-body{min-width:0;overflow-wrap:anywhere}
-    .row-title{font-size:15px;font-weight:600;line-height:1.45;color:var(--ink)}
-    .row-title.mixed{font-weight:400}
-    .row-title.plain{font-weight:500}
-    .row-meta{margin-top:3px;font-size:13.5px;line-height:1.55;color:var(--muted)}
+    .row-title{font-size:17px;font-weight:600;line-height:1.4;color:var(--ink)}
+    .row-title.mixed,.row-title.plain{font-weight:400}
+    .row-meta{margin-top:2px;font-size:15.5px;line-height:1.5;color:var(--soft)}
     .row-meta .self{color:var(--ink);font-weight:600}
-    .row-desc{margin-top:8px;max-width:62ch;font-size:14px;line-height:1.6;color:var(--body)}
-    .row-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .row-desc{margin-top:8px;max-width:62ch;font-size:16px;line-height:1.6;color:var(--body)}
+    .row-links{display:flex;flex-wrap:wrap;gap:0 22px;margin-top:2px}
     @media (min-width:768px){
-      .row{grid-template-columns:var(--key) minmax(0,1fr);column-gap:24px;align-items:baseline;padding:17px 0}
-    }
-    @media (min-width:768px) and (hover:hover) and (pointer:fine){
-      .row-actions .btn{min-height:30px;padding:0 10px;font-size:12.5px}
-      .row-actions .btn .i{width:14px;height:14px}
+      .row{grid-template-columns:var(--key) minmax(0,1fr);column-gap:var(--gap);align-items:baseline;padding:15px 0}
     }
 
-    .loading,.empty{padding:18px 0;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted)}
-    .footnote{margin-top:16px;font-size:12.5px;color:var(--muted)}
-    .content-foot{margin-top:22px;font-size:13.5px;color:var(--muted)}
-    .content-foot .tlink{min-height:44px}
+    /* The dash list of the home page: one item to a line. */
+    .dash li{position:relative;padding-left:1.15em;font-size:17px;line-height:1.5}
+    .dash li + li{margin-top:5px}
+    .dash li::before{content:"–";position:absolute;left:0;color:var(--muted)}
+    .dash .meta{font-size:15.5px;color:var(--soft)}
+    .dash a{font-weight:600}
+    @media (pointer:coarse){
+      /* A list of links, tapped with a finger: each line gets its 44px. */
+      .dash-links li + li{margin-top:19px}
+      .dash-links a{display:inline-block;padding:10px 0;margin:-10px 0}
+    }
+
+    /* Contact: the value of each row is the link, so the row carries the target. */
+    .contact .row{padding:7px 0}
+    .contact .row-body a{display:inline-flex;align-items:center;min-height:44px}
+    .contact .row-body address{padding:9px 0;line-height:1.5}
+    @media (min-width:768px){
+      .contact .row{align-items:center}
+      .contact .row.top{align-items:baseline}
+    }
+
+    .note{padding:16px 0;font-size:13px;color:var(--muted)}
+    .footnote{margin-top:14px;font-size:12.5px;color:var(--muted)}
+    .page-foot{margin-top:18px}
 
     /* A project video: 16:9 at whatever width it is given, capped at 680px.
        (The old padding-bottom trick measures the PARENT's width, so under a
        max-width it came out too tall; it survives only as the fallback.) */
     .video-embed{position:relative;max-width:680px;margin-top:12px;overflow:hidden;aspect-ratio:16/9;
-      border:1px solid var(--line);border-radius:var(--radius);background:#000}
+      border:1px solid var(--hair);border-radius:var(--radius);background:#000}
     .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
     @supports not (aspect-ratio:16/9){
       .video-embed{height:0;padding-bottom:56.25%}
-    }
-
-    /* ── Contact ───────────────────────────────────────────────────────── */
-    .lead{max-width:30em;font-size:18px;font-size:clamp(17px,4.6vw,21px);line-height:1.5;letter-spacing:-.012em;color:var(--body)}
-    .contact-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;margin-top:24px;margin-top:clamp(22px,6vw,32px)}
-    .contact-list{border-top:1px solid var(--hair)}
-    .contact-row{display:grid;grid-template-columns:36px minmax(0,1fr) 16px;align-items:center;column-gap:14px;min-height:68px;padding:12px 0;
-      border-bottom:1px solid var(--inner);text-decoration:none}
-    .tile{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line);border-radius:var(--radius);background:var(--head);color:var(--ink)}
-    .contact-text{min-width:0}
-    .contact-value{display:block;margin-top:2px;font-size:15px;font-weight:500;line-height:1.4;overflow-wrap:anywhere}
-    .contact-row > .i{color:var(--muted);transition:color .2s var(--ease),transform .2s var(--ease)}
-    .contact-row:hover > .i{color:var(--ink);transform:translate(2px,-2px)}
-    /* The panel: a #fafafa head carrying the mono label, a white body. */
-    .panel{border:1px solid var(--hair);border-radius:var(--radius);overflow:hidden;background:#fff}
-    .panel-head{padding:8px 14px;border-bottom:1px solid var(--hair);background:var(--head)}
-    .panel-body{padding:14px}
-    .affil-name{font-size:15px;font-weight:600;line-height:1.4}
-    .affil-addr{margin-top:4px;font-size:14px;line-height:1.6;color:var(--muted);font-style:normal}
-    @media (min-width:768px){
-      .contact-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:32px;align-items:start}
     }
 
     /* ── Footer ────────────────────────────────────────────────────────── */
@@ -476,20 +363,24 @@
     .foot a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;transition:color .2s var(--ease)}
     .foot a:hover{color:var(--ink)}
     @media (min-width:768px){
-      .foot-in{flex-direction:row;align-items:center;justify-content:space-between;gap:24px;min-height:56px;padding-top:0;padding-bottom:0}
+      .foot-in{flex-direction:row;align-items:center;justify-content:space-between;gap:24px;min-height:52px;padding-top:0;padding-bottom:0}
     }
 
-    .noscript{margin:0;padding:12px var(--gutter);border-bottom:1px solid var(--hair);background:var(--head);font-size:14px;color:var(--body)}
+    .noscript{margin:0;padding:12px var(--gutter);border-bottom:1px solid var(--hair);font-size:14px;color:var(--body)}
 
     @media (prefers-reduced-motion:reduce){
       *,*::before,*::after{animation:none!important;transition:none!important}
     }
+    /* Printed, a view is simply its text: the publication list prints as a
+       reference list, the experience view as a CV page. */
     @media print{
-      .bar,.scrim,.skip,.hero-art,.filters,.cta,.doors,.foot a{display:none!important}
+      .bar,.scrim,.skip,.filters,.links,.row-links,.foot a,.page-foot{display:none!important}
       html{overflow:visible}
-      body{display:block;min-height:0}
-      .view-in{display:block;padding-top:0}
-      .rail{position:static}
+      body{display:block;min-height:0;font-size:11pt}
+      .page{padding-top:0;padding-bottom:0}
+      .row{break-inside:avoid}
+      .group-head{break-after:avoid}
+      main a{text-decoration:none}
     }
   </style>
 </head>
@@ -504,17 +395,11 @@
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
   <symbol id="i-ext" viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
-  <symbol id="i-scholar" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
-  <symbol id="i-in" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></symbol>
 </svg>
 
 <header class="bar" id="bar">
   <div class="wrap bar-in">
-    <a class="brand" href="#home" data-nav="home">
-      <span class="brand-tile" aria-hidden="true">PN</span>
-      <span>Phu Nguyen</span>
-    </a>
+    <a class="brand" href="#home" data-nav="home">Phu Nguyen</a>
     <nav class="nav" id="nav" aria-label="Primary">
       <a href="#home" data-nav="home">Home</a>
       <a href="#publications" data-nav="publications">Publications</a>
@@ -523,16 +408,12 @@
       <a href="#awards" data-nav="awards">Awards</a>
       <a href="#contact" data-nav="contact">Contact</a>
     </nav>
-    <div class="bar-actions">
-      <a class="btn btn-sm btn-outline btn-bar" href="cv.pdf" download aria-label="Download CV (PDF)">
-        <svg class="i" aria-hidden="true"><use href="#i-down"/></svg>
-        <span><span class="cv-long">Download </span>CV</span>
-      </a>
-      <button type="button" class="menu-btn" id="menu-btn" aria-controls="nav" aria-expanded="false" aria-label="Open menu" title="Open menu">
-        <svg class="i i-open" aria-hidden="true"><use href="#i-menu"/></svg>
-        <svg class="i i-close" aria-hidden="true"><use href="#i-x"/></svg>
-      </button>
-    </div>
+    <a class="cv" href="cv.pdf" download aria-label="Download CV (PDF)">
+      <svg class="i" aria-hidden="true"><use href="#i-down"/></svg>CV</a>
+    <button type="button" class="menu-btn" id="menu-btn" aria-controls="nav" aria-expanded="false" aria-label="Open menu" title="Open menu">
+      <svg class="i i-open" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="i i-close" aria-hidden="true"><use href="#i-x"/></svg>
+    </button>
   </div>
 </header>
 <div class="scrim" id="scrim" hidden></div>
@@ -546,11 +427,8 @@
 
   <!-- ═══ HOME ═══ -->
   <section class="view" id="view-home" aria-labelledby="h-home">
-    <div class="hero">
-      <div class="hero-art" aria-hidden="true"><canvas id="lattice"></canvas></div>
-      <div class="wrap hero-in">
-        <p class="pill"><span class="dot"></span><span class="kicker">Supply chain &amp; operations management</span></p>
-
+    <div class="wrap page">
+      <div class="intro">
         <div class="portrait">
           <span class="portrait-fallback" aria-hidden="true">PN</span>
           <img src="assets/photo.jpg" alt="Portrait of Phu Nguyen" decoding="async" fetchpriority="high"
@@ -558,223 +436,140 @@
         </div>
         <div class="who">
           <h1 class="name" id="h-home" tabindex="-1">Phu Nguyen</h1>
-          <p class="role">Research Associate · PhD Candidate</p>
+          <p class="role"><span>Research Associate</span><span class="sep" aria-hidden="true"> · </span><span>PhD Candidate</span></p>
         </div>
-
-        <p class="lede">I am a <strong>Research Associate</strong> at the
+        <p class="bio">I am a <strong>Research Associate</strong> at the
           <strong>Berlin School of Economics and Law (HWR Berlin)</strong> and a
           <strong>PhD Candidate</strong> at <strong>TU Berlin</strong> — researching how to make global
-          supply chains <span class="tail">more resilient and efficient.</span></p>
-
-        <div class="cta">
-          <a class="btn btn-lg btn-primary" href="#publications">View publications
-            <svg class="i i-nudge" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn-lg btn-outline" href="cv.pdf" download>
-            <svg class="i" aria-hidden="true"><use href="#i-down"/></svg>Download CV</a>
-          <a class="btn btn-lg btn-outline" href="#contact">Contact</a>
-        </div>
-
-        <p class="legend" aria-hidden="true">
-          <span style="color:var(--firm)"><i></i>Firm</span>
-          <span style="color:var(--product)"><i></i>Product</span>
-          <span style="color:var(--process)"><i></i>Process</span>
+          supply chains more resilient and efficient.</p>
+        <p class="links">
+          <a class="act" href="#publications">View publications<svg class="i i-nudge" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="act" href="cv.pdf" download>Download CV<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></a>
+          <a class="act" href="#contact">Contact<svg class="i i-nudge" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </p>
       </div>
-    </div>
 
-    <div class="facts">
-      <div class="facts-grid">
-        <section class="fact" aria-labelledby="k-interests">
-          <h2 class="kicker" id="k-interests">Interests</h2>
-          <ol class="fact-list" id="interests-home"><li class="loading">Loading…</li></ol>
+      <div class="rows facts">
+        <section class="row" aria-labelledby="k-interests">
+          <h2 class="row-key" id="k-interests">Interests</h2>
+          <div class="row-body"><ul class="dash" id="interests-home"><li class="note">Loading…</li></ul></div>
         </section>
-        <section class="fact" aria-labelledby="k-projects">
-          <h2 class="kicker" id="k-projects">Projects</h2>
-          <ul class="fact-list" id="projects-home"></ul>
+        <section class="row" aria-labelledby="k-projects">
+          <h2 class="row-key" id="k-projects">Projects</h2>
+          <div class="row-body"><ul class="dash dash-links" id="projects-home"></ul></div>
         </section>
       </div>
-    </div>
-
-    <div class="wrap section">
-      <h2 class="kicker" id="k-explore">Explore</h2>
-      <nav class="doors" aria-labelledby="k-explore">
-        <a class="door" href="#publications">
-          <span class="door-num" aria-hidden="true">01</span>
-          <span class="door-text"><span class="door-title">Publications</span>
-            <span class="door-desc">Working papers, conference proceedings, books and talks.</span></span>
-          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-        <a class="door" href="#projects">
-          <span class="door-num" aria-hidden="true">02</span>
-          <span class="door-text"><span class="door-title">Projects</span>
-            <span class="door-desc" id="door-projects">Research and funded work.</span></span>
-          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-        <a class="door" href="#experience">
-          <span class="door-num" aria-hidden="true">03</span>
-          <span class="door-text"><span class="door-title">Experience</span>
-            <span class="door-desc">Education, research and industry roles.</span></span>
-          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-        <a class="door" href="#awards">
-          <span class="door-num" aria-hidden="true">04</span>
-          <span class="door-text"><span class="door-title">Awards</span>
-            <span class="door-desc">Awards, grants and academic service.</span></span>
-          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-        <a class="door" href="#contact">
-          <span class="door-num" aria-hidden="true">05</span>
-          <span class="door-text"><span class="door-title">Contact</span>
-            <span class="door-desc">Email, Google Scholar and LinkedIn.</span></span>
-          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-        <a class="door" href="cv.pdf" download>
-          <span class="door-num" aria-hidden="true">06</span>
-          <span class="door-text"><span class="door-title">Curriculum vitae</span>
-            <span class="door-desc">Download the full CV as a PDF.</span></span>
-          <svg class="i" aria-hidden="true"><use href="#i-down"/></svg>
-        </a>
-      </nav>
     </div>
   </section>
 
 
   <!-- ═══ PUBLICATIONS ═══ -->
   <section class="view" id="view-publications" aria-labelledby="h-publications">
-    <div class="wrap view-in">
-      <header class="rail">
-        <p class="eyebrow"><span class="dot"></span><span class="kicker">Papers, books &amp; talks</span></p>
-        <h1 class="view-title" id="h-publications" tabindex="-1">Publications</h1>
+    <div class="wrap page">
+      <header class="page-head">
+        <h1 class="title" id="h-publications" tabindex="-1">Publications</h1>
         <div class="filters" id="pub-filters" role="group" aria-label="Filter publications" data-target="#pub-content .group"></div>
       </header>
-      <div class="content">
-        <div id="pub-content"><p class="loading">Loading publications…</p></div>
-        <p class="content-foot"><a class="tlink" href="https://scholar.google.com/citations?user=_Lzzc3sAAAAJ&amp;hl=en" target="_blank" rel="noopener">Citations and the full record on Google Scholar<svg class="i" aria-hidden="true"><use href="#i-ext"/></svg></a></p>
-      </div>
+      <div id="pub-content"><p class="note">Loading publications…</p></div>
+      <p class="page-foot"><a class="act" href="https://scholar.google.com/citations?user=_Lzzc3sAAAAJ&amp;hl=en" target="_blank" rel="noopener">Citations and the full record on Google Scholar<svg class="i" aria-hidden="true"><use href="#i-ext"/></svg></a></p>
     </div>
   </section>
 
 
   <!-- ═══ PROJECTS ═══ -->
   <section class="view" id="view-projects" aria-labelledby="h-projects">
-    <div class="wrap view-in">
-      <header class="rail">
-        <p class="eyebrow"><span class="dot"></span><span class="kicker">Research &amp; funded work</span></p>
-        <h1 class="view-title" id="h-projects" tabindex="-1">Projects</h1>
+    <div class="wrap page">
+      <header class="page-head">
+        <h1 class="title" id="h-projects" tabindex="-1">Projects</h1>
       </header>
-      <div class="content">
-        <div class="group">
-          <ul class="rows ruled" id="projects-content"></ul>
-        </div>
-      </div>
+      <ul class="rows" id="projects-content"></ul>
     </div>
   </section>
 
 
   <!-- ═══ EXPERIENCE ═══ -->
   <section class="view" id="view-experience" aria-labelledby="h-experience">
-    <div class="wrap view-in">
-      <header class="rail">
-        <p class="eyebrow"><span class="dot"></span><span class="kicker">Career</span></p>
-        <h1 class="view-title" id="h-experience" tabindex="-1">Experience</h1>
+    <div class="wrap page">
+      <header class="page-head">
+        <h1 class="title" id="h-experience" tabindex="-1">Experience</h1>
         <div class="filters" role="group" aria-label="Filter experience" data-target="#view-experience .group">
-          <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
-          <button type="button" class="chip" data-filter="education" aria-pressed="false">Education</button>
-          <button type="button" class="chip" data-filter="research" aria-pressed="false">Research</button>
-          <button type="button" class="chip" data-filter="professional" aria-pressed="false">Professional</button>
-          <button type="button" class="chip" data-filter="other" aria-pressed="false">Other</button>
+          <button type="button" class="tab" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="tab" data-filter="education" aria-pressed="false">Education</button>
+          <button type="button" class="tab" data-filter="research" aria-pressed="false">Research</button>
+          <button type="button" class="tab" data-filter="professional" aria-pressed="false">Professional</button>
+          <button type="button" class="tab" data-filter="other" aria-pressed="false">Other</button>
         </div>
       </header>
-      <div class="content">
-        <section class="group" data-group="education">
-          <div class="group-head"><h2 class="group-title">Education</h2><span class="group-count" data-count="edu-content"></span></div>
-          <ul class="rows" id="edu-content"><li class="loading">Loading…</li></ul>
-        </section>
-        <section class="group" data-group="research">
-          <div class="group-head"><h2 class="group-title">Research experience</h2><span class="group-count" data-count="research-content"></span></div>
-          <ul class="rows" id="research-content"><li class="loading">Loading…</li></ul>
-        </section>
-        <section class="group" data-group="professional">
-          <div class="group-head"><h2 class="group-title">Professional experience</h2><span class="group-count" data-count="prof-content"></span></div>
-          <ul class="rows" id="prof-content"><li class="loading">Loading…</li></ul>
-        </section>
-        <section class="group" data-group="other">
-          <div class="group-head"><h2 class="group-title">Other experience</h2><span class="group-count" data-count="other-content"></span></div>
-          <ul class="rows" id="other-content"><li class="loading">Loading…</li></ul>
-        </section>
-        <p class="footnote">* Expected</p>
-      </div>
+      <section class="group" data-group="education">
+        <div class="group-head"><h2 class="group-title">Education</h2><span class="count" data-count="edu-content"></span></div>
+        <ul class="rows" id="edu-content"><li class="note">Loading…</li></ul>
+      </section>
+      <section class="group" data-group="research">
+        <div class="group-head"><h2 class="group-title">Research experience</h2><span class="count" data-count="research-content"></span></div>
+        <ul class="rows" id="research-content"><li class="note">Loading…</li></ul>
+      </section>
+      <section class="group" data-group="professional">
+        <div class="group-head"><h2 class="group-title">Professional experience</h2><span class="count" data-count="prof-content"></span></div>
+        <ul class="rows" id="prof-content"><li class="note">Loading…</li></ul>
+      </section>
+      <section class="group" data-group="other">
+        <div class="group-head"><h2 class="group-title">Other experience</h2><span class="count" data-count="other-content"></span></div>
+        <ul class="rows" id="other-content"><li class="note">Loading…</li></ul>
+      </section>
+      <p class="footnote">* Expected</p>
     </div>
   </section>
 
 
   <!-- ═══ AWARDS ═══ -->
   <section class="view" id="view-awards" aria-labelledby="h-awards">
-    <div class="wrap view-in">
-      <header class="rail">
-        <p class="eyebrow"><span class="dot"></span><span class="kicker">Recognition</span></p>
-        <h1 class="view-title" id="h-awards" tabindex="-1">Awards &amp; honors</h1>
+    <div class="wrap page">
+      <header class="page-head">
+        <h1 class="title" id="h-awards" tabindex="-1">Awards &amp; honors</h1>
         <div class="filters" role="group" aria-label="Filter awards" data-target="#view-awards .group">
-          <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
-          <button type="button" class="chip" data-filter="awards" aria-pressed="false">Awards &amp; grants</button>
-          <button type="button" class="chip" data-filter="service" aria-pressed="false">Academic service</button>
+          <button type="button" class="tab" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="tab" data-filter="awards" aria-pressed="false">Awards &amp; grants</button>
+          <button type="button" class="tab" data-filter="service" aria-pressed="false">Academic service</button>
         </div>
       </header>
-      <div class="content">
-        <section class="group" data-group="awards">
-          <div class="group-head"><h2 class="group-title">Awards &amp; grants</h2><span class="group-count" data-count="awards-content"></span></div>
-          <ul class="rows" id="awards-content"><li class="loading">Loading…</li></ul>
-        </section>
-        <section class="group" data-group="service">
-          <div class="group-head"><h2 class="group-title">Academic service</h2><span class="group-count" data-count="service-content"></span></div>
-          <p class="group-note">I serve as a <strong>peer reviewer</strong> for the following journals:</p>
-          <ul class="rows" id="service-content"><li class="loading">Loading…</li></ul>
-        </section>
-      </div>
+      <section class="group" data-group="awards">
+        <div class="group-head"><h2 class="group-title">Awards &amp; grants</h2><span class="count" data-count="awards-content"></span></div>
+        <ul class="rows" id="awards-content"><li class="note">Loading…</li></ul>
+      </section>
+      <section class="group" data-group="service">
+        <div class="group-head"><h2 class="group-title">Academic service</h2><span class="count" data-count="service-content"></span></div>
+        <p class="group-note">I serve as a <strong>peer reviewer</strong> for the following journals:</p>
+        <ul class="rows" id="service-content"><li class="note">Loading…</li></ul>
+      </section>
     </div>
   </section>
 
 
   <!-- ═══ CONTACT ═══ -->
   <section class="view" id="view-contact" aria-labelledby="h-contact">
-    <div class="wrap view-in">
-      <header class="rail">
-        <p class="eyebrow"><span class="dot"></span><span class="kicker">Get in touch</span></p>
-        <h1 class="view-title" id="h-contact" tabindex="-1">Contact</h1>
+    <div class="wrap page">
+      <header class="page-head">
+        <h1 class="title" id="h-contact" tabindex="-1">Contact</h1>
+        <p class="lead">I am always open to research collaborations, speaking invitations, and academic discussions.</p>
       </header>
-      <div class="content">
-        <p class="lead">I am always open to research collaborations, speaking invitations,
-          <span class="tail">and academic discussions.</span></p>
-        <div class="contact-grid">
-          <ul class="contact-list">
-            <li><a class="contact-row" href="mailto:phu.nguyen@hwr-berlin.de">
-              <span class="tile"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
-              <span class="contact-text"><span class="kicker">Email</span>
-                <span class="contact-value">phu.nguyen@hwr-berlin.de</span></span>
-              <svg class="i" aria-hidden="true"><use href="#i-ext"/></svg>
-            </a></li>
-            <li><a class="contact-row" href="https://scholar.google.com/citations?user=_Lzzc3sAAAAJ&amp;hl=en" target="_blank" rel="noopener">
-              <span class="tile"><svg class="i" aria-hidden="true"><use href="#i-scholar"/></svg></span>
-              <span class="contact-text"><span class="kicker">Google Scholar</span>
-                <span class="contact-value">Publications and citations</span></span>
-              <svg class="i" aria-hidden="true"><use href="#i-ext"/></svg>
-            </a></li>
-            <li><a class="contact-row" href="https://linkedin.com/in/phu-nguyen-scom" target="_blank" rel="noopener">
-              <span class="tile"><svg class="i" aria-hidden="true"><use href="#i-in"/></svg></span>
-              <span class="contact-text"><span class="kicker">LinkedIn</span>
-                <span class="contact-value">linkedin.com/in/phu-nguyen-scom</span></span>
-              <svg class="i" aria-hidden="true"><use href="#i-ext"/></svg>
-            </a></li>
-          </ul>
-          <section class="panel" aria-labelledby="k-affil">
-            <div class="panel-head"><h2 class="kicker" id="k-affil">Affiliation</h2></div>
-            <div class="panel-body">
-              <p class="affil-name">Berlin School of Economics and Law</p>
-              <address class="affil-addr">Badensche Str. 50–51<br>10825 Berlin, Germany</address>
-            </div>
-          </section>
-        </div>
-      </div>
+      <ul class="rows contact">
+        <li class="row">
+          <div class="row-key">Email</div>
+          <div class="row-body"><a href="mailto:phu.nguyen@hwr-berlin.de">phu.nguyen@hwr-berlin.de</a></div>
+        </li>
+        <li class="row">
+          <div class="row-key">Google Scholar</div>
+          <div class="row-body"><a href="https://scholar.google.com/citations?user=_Lzzc3sAAAAJ&amp;hl=en" target="_blank" rel="noopener">Publications and citations</a></div>
+        </li>
+        <li class="row">
+          <div class="row-key">LinkedIn</div>
+          <div class="row-body"><a href="https://linkedin.com/in/phu-nguyen-scom" target="_blank" rel="noopener">linkedin.com/in/phu-nguyen-scom</a></div>
+        </li>
+        <li class="row top">
+          <div class="row-key">Address</div>
+          <div class="row-body"><address>Berlin School of Economics and Law<br>Badensche Str. 50–51<br>10825 Berlin, Germany</address></div>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -927,26 +722,21 @@ if (window.matchMedia) {
 
 /* ═══════════════════════════════════════════════════════
    FILTERS
-   A bar shows only the group(s) matching the pressed chip;
+   A bar shows only the group(s) matching the pressed word;
    "all" shows everything. The bar names its own groups in
    data-target.
 ═══════════════════════════════════════════════════════ */
 document.addEventListener('click', function (ev) {
-  var chip = ev.target.closest ? ev.target.closest('.chip[data-filter]') : null;
-  if (!chip) return;
-  var group = chip.parentNode;
-  var f = chip.getAttribute('data-filter');
-  each(group.querySelectorAll('.chip'), function (b) {
-    b.setAttribute('aria-pressed', b === chip ? 'true' : 'false');
+  var tab = ev.target.closest ? ev.target.closest('.tab[data-filter]') : null;
+  if (!tab) return;
+  var set = tab.parentNode;
+  var f = tab.getAttribute('data-filter');
+  each(set.querySelectorAll('.tab'), function (b) {
+    b.setAttribute('aria-pressed', b === tab ? 'true' : 'false');
   });
-  each(document.querySelectorAll(group.getAttribute('data-target')), function (el) {
+  each(document.querySelectorAll(set.getAttribute('data-target')), function (el) {
     el.hidden = !(f === 'all' || el.getAttribute('data-group') === f);
   });
-  // The list just got shorter: if its top is now above the window, bring it back.
-  var content = group.parentNode.parentNode.querySelector('.content');
-  if (content && content.getBoundingClientRect().top < 0) {
-    window.scrollTo(0, Math.max(0, window.pageYOffset + content.getBoundingClientRect().top - bar.offsetHeight - 16));
-  }
 });
 
 /* ═══════════════════════════════════════════════════════
@@ -1062,9 +852,8 @@ function titleHtml(head) {
   return '<strong>' + head + '</strong>';
 }
 
-function rowHtml(key, body, keyClass) {
-  return '<li class="row"><div class="row-key' + (keyClass ? ' ' + keyClass : '') + '">' + key + '</div>'
-       + '<div class="row-body">' + body + '</div></li>';
+function rowHtml(key, body) {
+  return '<li class="row"><div class="row-key">' + key + '</div><div class="row-body">' + body + '</div></li>';
 }
 
 /* Render grouped entries as rows: role, then one line per detail */
@@ -1184,6 +973,16 @@ function ordinal(n) {
   return v + (['th', 'st', 'nd', 'rd'][v % 10] || 'th');
 }
 
+/* A line of stand-alone links under an entry: [{label, href, download}] */
+function linkRow(links) {
+  if (!links.length) return '';
+  return '<p class="row-links">' + links.map(function (l) {
+    return '<a class="act" href="' + escAttr(l.href) + '"'
+      + (l.download ? ' download' : ' target="_blank" rel="noopener"') + '>'
+      + l.label + icon(l.download ? 'down' : 'ext') + '</a>';
+  }).join('') + '</p>';
+}
+
 function renderPubEntry(e, prefix, num) {
   function field(v) { return cleanTex(v || '').replace(/\.$/, ''); }
   var title   = field(e.title);
@@ -1212,18 +1011,14 @@ function renderPubEntry(e, prefix, num) {
     : title;
 
   var pdf = (e.pdf || '').trim();
-  var actions = pdf
-    ? '<div class="row-actions">'
-      + '<a class="btn btn-sm btn-outline" href="' + escAttr(pdf) + '" target="_blank" rel="noopener">' + icon('ext') + 'View PDF</a>'
-      + '<a class="btn btn-sm btn-outline" href="' + escAttr(pdf) + '" download>' + icon('down') + 'Download</a>'
-      + '</div>'
-    : '';
+  var links = pdf ? linkRow([{ label: 'View PDF', href: pdf }, { label: 'Download', href: pdf, download: true }]) : '';
 
-  return rowHtml(prefix + num,
+  // The label is set like a citation key: [W1], [C3].
+  return rowHtml('[' + prefix + num + ']',
     '<h3 class="row-title">' + titleLink + '</h3>'
     + (authors ? '<p class="row-meta">' + authors + '</p>' : '')
     + (venue   ? '<p class="row-meta">' + venue + '</p>' : '')
-    + actions, 'is-label');
+    + links);
 }
 
 function renderPublications(entries) {
@@ -1241,18 +1036,18 @@ function renderPublications(entries) {
   ];
 
   var avail = sections.filter(function (s) { return (byKw[s.kw] || []).length; });
-  if (!avail.length) return { filters: '', groups: '<p class="empty">No publications yet.</p>' };
+  if (!avail.length) return { filters: '', groups: '<p class="note">No publications yet.</p>' };
 
-  var filters = '<button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>'
+  var filters = '<button type="button" class="tab" data-filter="all" aria-pressed="true">All</button>'
     + avail.map(function (s) {
-        return '<button type="button" class="chip" data-filter="' + s.group + '" aria-pressed="false">' + s.label + '</button>';
+        return '<button type="button" class="tab" data-filter="' + s.group + '" aria-pressed="false">' + s.label + '</button>';
       }).join('');
 
   var groups = avail.map(function (s) {
     var list = byKw[s.kw].slice().sort(function (a, b) { return (parseInt(b.year, 10) || 0) - (parseInt(a.year, 10) || 0); });
     return '<section class="group" data-group="' + s.group + '">'
       + '<div class="group-head"><h2 class="group-title">' + s.heading + '</h2>'
-      + '<span class="group-count" aria-label="' + list.length + ' entries">' + list.length + '</span></div>'
+      + '<span class="count" aria-label="' + list.length + ' entries">' + list.length + '</span></div>'
       + '<ul class="rows">' + list.map(function (e, i) { return renderPubEntry(e, s.prefix, i + 1); }).join('') + '</ul>'
       + '</section>';
   }).join('');
@@ -1274,28 +1069,20 @@ function ytEmbed(urlOrId) {
 /* Same row grammar as every other list: year | project */
 function renderProjects() {
   return PROJECTS.map(function (p) {
-    var body = '<p class="row-title mixed"><a href="' + escAttr(p.link) + '" target="_blank" rel="noopener"><strong>' + p.title + '</strong></a>'
+    return rowHtml(yearHtml(p.year),
+      '<p class="row-title mixed"><a href="' + escAttr(p.link) + '" target="_blank" rel="noopener"><strong>' + p.title + '</strong></a>'
       + (p.funder ? ' — ' + p.funder : '') + '</p>'
       + (p.desc ? '<p class="row-desc">' + p.desc + '</p>' : '')
       + (p.videos || []).map(ytEmbed).join('')
-      + ((p.links || []).length
-          ? '<div class="row-actions">' + p.links.map(function (l) {
-              return '<a class="btn btn-sm btn-outline" href="' + escAttr(l.href) + '"'
-                + (l.download ? ' download' : ' target="_blank" rel="noopener"') + '>'
-                + icon(l.download ? 'down' : 'ext') + l.label + '</a>';
-            }).join('') + '</div>'
-          : '');
-    return rowHtml(yearHtml(p.year), body);
+      + linkRow(p.links || []));
   }).join('');
 }
 
 function renderProjectsHome() {
-  return PROJECTS.map(function (p, i) {
-    var sub = [p.funder, p.year].filter(Boolean).join(' · ');
-    return '<li><a class="fact-row" href="' + escAttr(p.link) + '" target="_blank" rel="noopener">'
-      + '<span class="fact-num" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span>'
-      + '<span class="fact-label">' + p.title + (sub ? '<span class="fact-sub">' + sub + '</span>' : '') + '</span>'
-      + icon('ext') + '</a></li>';
+  return PROJECTS.map(function (p) {
+    var meta = [p.funder, p.year].filter(Boolean).join(', ');
+    return '<li><a href="' + escAttr(p.link) + '" target="_blank" rel="noopener">' + p.title + '</a>'
+      + (meta ? ' <span class="meta">— ' + meta + '</span>' : '') + '</li>';
   }).join('');
 }
 
@@ -1322,11 +1109,11 @@ function fill(id, text, render) {
   if (!el) return;
   var counter = document.querySelector('[data-count="' + id + '"]');
   if (text === null) {
-    el.innerHTML = '<li class="empty">' + FAILED + '</li>';
+    el.innerHTML = '<li class="note">' + FAILED + '</li>';
     return;
   }
   var out = render(text);
-  el.innerHTML = out.html || '<li class="empty">Nothing here yet.</li>';
+  el.innerHTML = out.html || '<li class="note">Nothing here yet.</li>';
   if (counter && out.count) {
     counter.textContent = out.count;
     counter.setAttribute('aria-label', out.count + (out.count === 1 ? ' entry' : ' entries'));
@@ -1346,7 +1133,6 @@ function init() {
   // ── Projects (no file to wait for) ──
   $('projects-content').innerHTML = renderProjects();
   $('projects-home').innerHTML = renderProjectsHome();
-  if (PROJECTS.length) $('door-projects').textContent = PROJECTS.map(function (p) { return p.title; }).join(' · ');
 
   // Fetch all files from cv-data/ in parallel
   Promise.all([
@@ -1361,13 +1147,8 @@ function init() {
   ]).then(function (f) {
     // ── Interests ──
     fill('interests-home', f[0], function (text) {
-      var items = parseLongtable(text).map(function (r) { return r.content; });
-      return { html: items.map(function (t, i) {
-        return '<li class="fact-row"><span class="fact-num" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span>'
-             + '<span class="fact-label">' + t + '</span></li>';
-      }).join('') };
+      return { html: parseLongtable(text).map(function (r) { return '<li>' + r.content + '</li>'; }).join('') };
     });
-    $('interests-home').style.minHeight = '0';
 
     // ── Education & experience ──
     fill('edu-content',      f[1], timeline);
@@ -1381,7 +1162,7 @@ function init() {
 
     // ── Publications ──
     if (f[7] === null) {
-      $('pub-content').innerHTML = '<p class="empty">' + FAILED + '</p>';
+      $('pub-content').innerHTML = '<p class="note">' + FAILED + '</p>';
     } else {
       var pubs = renderPublications(parseBib(f[7]));
       $('pub-filters').innerHTML = pubs.filters;
@@ -1390,310 +1171,8 @@ function init() {
   });
 }
 
-/* ═══════════════════════════════════════════════════════
-   THE HERO FIGURE
-   The three-echelon network — firm, product, process — with
-   a disruption walking it one hop at a time: the ripple
-   effect. Ported from SuReSuite's About page
-   (src/components/about/HeroLattice.tsx). The fixed seed and
-   the closed tour are both deliberate: every visitor sees
-   the same walk, and it loops without a jump.
-═══════════════════════════════════════════════════════ */
-function lattice(cvs) {
-  var LAYERS = ['#e0930b', '#7c3aed', '#14b8c4'];   // firm / product / process
-  var still = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var SIZES = [5, 4, 3], OFF = [0, 25, 41];
-  var NODE_ALPHA = [1, 0.92, 0.84], EDGE_ALPHA = [0.13, 0.11, 0.09];
-  var STEP = 0.9;   // seconds per hop
-  var TAIL = 6;     // hops that stay warm, and the no-revisit window
-
-  // ── Topology and the walk: fixed, so they are built once ──
-  var meta = [];
-  for (var L = 0; L < 3; L++) {
-    for (var i = 0; i < SIZES[L]; i++) for (var j = 0; j < SIZES[L]; j++) meta.push({ L: L, i: i, j: j });
-  }
-  function key(l, a, b) { return OFF[l] + a * SIZES[l] + b; }
-  // adjacency: 4-neighbour inside a plane, plus the single (1,1) door
-  function nb(k) {
-    var n = meta[k], s = SIZES[n.L], out = [];
-    if (n.i > 0) out.push(key(n.L, n.i - 1, n.j));
-    if (n.i < s - 1) out.push(key(n.L, n.i + 1, n.j));
-    if (n.j > 0) out.push(key(n.L, n.i, n.j - 1));
-    if (n.j < s - 1) out.push(key(n.L, n.i, n.j + 1));
-    if (n.i === 1 && n.j === 1) {
-      if (n.L > 0) out.push(key(n.L - 1, 1, 1));
-      if (n.L < 2) out.push(key(n.L + 1, 1, 1));
-    }
-    return out;
-  }
-  var srcIdx = key(0, 0, 0);
-  var homeHop = meta.map(function () { return Infinity; });
-  homeHop[srcIdx] = 0;
-  var ring = [srcIdx];
-  while (ring.length) {
-    var next = [];
-    ring.forEach(function (u) {
-      nb(u).forEach(function (v) {
-        if (homeHop[v] === Infinity) { homeHop[v] = homeHop[u] + 1; next.push(v); }
-      });
-    });
-    ring = next;
-  }
-  var seed = 20240601;
-  function rnd() { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; }
-  function pick(a) { return a[Math.min(a.length - 1, Math.floor(rnd() * a.length))]; }
-  function dd(k) { return Math.abs(meta[k].i - 1) + Math.abs(meta[k].j - 1); }
-  function inPlane(k, l) { return nb(k).filter(function (o) { return meta[o].L === l; }); }
-
-  var walk = [srcIdx];
-  function cur() { return walk[walk.length - 1]; }
-  function wander(l, count) {
-    for (var s = 0; s < count; s++) {
-      var opts = inPlane(cur(), l);
-      if (!opts.length) return;
-      var recent = walk.slice(Math.max(0, walk.length - TAIL), walk.length - 1);
-      var pool = opts.filter(function (o) { return recent.indexOf(o) < 0; });
-      walk.push(pick(pool.length ? pool : opts));
-    }
-  }
-  function toDoor(l) {
-    for (var g = 0; dd(cur()) > 0 && g < 12; g++) {
-      var here = cur();
-      var opts = inPlane(here, l).filter(function (o) { return dd(o) < dd(here); });
-      if (!opts.length) return;
-      walk.push(pick(opts));
-    }
-  }
-  function cross(l) { walk.push(key(l, 1, 1)); }
-
-  wander(0, 7); toDoor(0); cross(1);
-  wander(1, 5); toDoor(1); cross(2);
-  wander(2, 5); toDoor(2); cross(1);
-  wander(1, 4); toDoor(1); cross(0);
-  wander(0, 6); toDoor(0); cross(1);
-  wander(1, 5); toDoor(1); cross(2);
-  wander(2, 4); toDoor(2); cross(1);
-  wander(1, 4); toDoor(1); cross(0);
-  for (var g = 0; homeHop[cur()] > 1 && g < 24; g++) {
-    var here = cur();
-    var opts = nb(here).filter(function (o) { return homeHop[o] === homeHop[here] - 1; });
-    if (!opts.length) break;
-    walk.push(pick(opts));
-  }
-  var WALK = walk.length;
-  function ekey(a, b) { return a < b ? a + '-' + b : b + '-' + a; }
-
-  /* ── Where the figure goes ──
-     SuReSuite's About page sizes it from the viewport, which works there
-     because the copy is one column of known width. Here a portrait, a name and
-     a row of buttons all move with the screen, so the figure is placed by
-     measurement instead: take every band of height between two pieces of copy,
-     see how far left it is free, and keep the band that fits the largest
-     figure. Its right edge always lands on the page's right gutter. */
-  var hero = cvs.parentNode.parentNode;
-  var heroIn = hero.querySelector('.hero-in');
-  var legend = hero.querySelector('.legend');
-  var FIG_W = 8, FIG_H = 6.94;                     // the stack is 8 units wide, 6.94 tall
-  var geo = null;
-  function place(W, H) {
-    var c = cvs.getBoundingClientRect();
-    var inner = heroIn.getBoundingClientRect();
-    var right = inner.right - c.left - parseFloat(getComputedStyle(heroIn).paddingRight) - 6;
-    var boxes = [];
-    each(heroIn.querySelectorAll('.pill,.portrait,.name,.role,.lede,.cta .btn'), function (el) {
-      var r;
-      if (/\b(name|role)\b/.test(el.className) && document.createRange) {
-        var range = document.createRange();        // the words themselves, not the full-width block
-        range.selectNodeContents(el);
-        r = range.getBoundingClientRect();
-      } else {
-        r = el.getBoundingClientRect();
-      }
-      if (r.width && r.height) boxes.push({ r: r.right - c.left, t: r.top - c.top, b: r.bottom - c.top });
-    });
-    if (!boxes.length) return null;
-    var showLegend = legend && getComputedStyle(legend).display !== 'none';
-    var legendH = showLegend ? 30 : 0;
-    var copyBottom = Math.max.apply(null, boxes.map(function (b) { return b.b; }));
-    var tops = [10].concat(boxes.map(function (b) { return b.b + 8; }));
-    var bottoms = [Math.min(H - 10, copyBottom + 16)].concat(boxes.map(function (b) { return b.t - 12; }));
-    var best = null;
-    tops.forEach(function (y0) {
-      bottoms.forEach(function (y1) {
-        if (y1 - y0 < 90) return;
-        var left = 0;
-        boxes.forEach(function (b) { if (b.t < y1 && b.b > y0) left = Math.max(left, b.r); });
-        var ux = Math.min((right - left - 24) / FIG_W, (y1 - y0 - legendH) / FIG_H, 60);
-        if (ux >= 12 && (!best || ux > best.ux + 0.01)) best = { ux: ux, y0: y0, y1: y1 };
-      });
-    });
-    if (legend) legend.style.visibility = 'hidden';
-    if (!best) return null;
-    var h = best.ux * FIG_H;
-    var top = best.y0 + (best.y1 - best.y0 - h - legendH) / 2;
-    if (showLegend) {
-      legend.style.top = Math.round(top + h + 16 + c.top - inner.top) + 'px';
-      legend.style.visibility = 'visible';
-    }
-    return { ux: best.ux, cx: right - best.ux * 4, cy: top + best.ux * 2 + 2.2 };
-  }
-  function replace() { geo = null; if (still) paint(3.2); }
-
-  function paint(t) {
-    var W = cvs.clientWidth, H = cvs.clientHeight;
-    if (!W || !H) return;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    if (cvs.width !== Math.round(W * dpr) || cvs.height !== Math.round(H * dpr)) {
-      cvs.width = Math.round(W * dpr);
-      cvs.height = Math.round(H * dpr);
-    }
-    var ctx = cvs.getContext('2d');
-    if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    if (!geo) {
-      ctx.clearRect(0, 0, W, H);
-      geo = place(W, H);
-    }
-    if (!geo) return;                              // no free room for it at this size
-    var R = Math.min(W, H) * 0.42;
-    var ux = geo.ux, uy = ux * 0.5, gap = ux * 1.97;
-    var cx = geo.cx, cy = geo.cy;
-    var sway = Math.sin(t / 31) * R * 0.018;
-    // Only the figure's own box is redrawn (plus the few pixels it drifts).
-    ctx.clearRect(cx - ux * 4.6 - 12, cy - ux * 2.3 - 12, ux * 9.2 + 24, ux * FIG_H + ux * 0.6 + 24);
-
-    var nodes = meta.map(function (n) {
-      var c = (SIZES[n.L] - 1) / 2;
-      return {
-        L: n.L,
-        x: cx + ((n.i - c) - (n.j - c)) * ux + sway,
-        y: cy + ((n.i - c) + (n.j - c)) * uy + n.L * gap - Math.cos(t / 27 + n.L) * R * 0.012
-      };
-    });
-    function at(l, a, b) { return nodes[key(l, a, b)]; }
-
-    // negative-safe: the first frame's stamp can precede t0
-    var tw = Math.max(0, t);
-    var step = ((Math.floor(tw / STEP) % WALK) + WALK) % WALK;
-    var p = (tw / STEP) % 1;
-
-    var nodeHeat = nodes.map(function () { return 0; });
-    var edgeHeat = {};
-    for (var s = 0; s <= TAIL; s++) {
-      var si = (step - s + WALK) % WALK;         // wraps: the tour is closed
-      var decay = Math.exp(-(s + p) / 2.2);
-      nodeHeat[walk[si]] = Math.max(nodeHeat[walk[si]], decay);
-      var k = ekey(walk[si], walk[(si + 1) % WALK]);
-      var amt = s === 0 ? Math.min(1, p * 1.7) : Math.exp(-(s - 1 + p) / 2);
-      edgeHeat[k] = Math.max(edgeHeat[k] || 0, amt);
-    }
-
-    // layer focus: the plane holding the disruption lifts, the others recede
-    var dim = 0.4;
-    var rawFocus = [0, 0, 0];
-    nodes.forEach(function (n, idx) { rawFocus[n.L] = Math.max(rawFocus[n.L], nodeHeat[idx]); });
-    var top = Math.max(rawFocus[0], rawFocus[1], rawFocus[2], 1e-4);
-    function vis(l) { return dim + (1 - dim) * (rawFocus[l] / top); }
-
-    // faint tinted plane per echelon
-    var l, sz, v;
-    for (l = 0; l < 3; l++) {
-      sz = SIZES[l]; v = vis(l);
-      var corners = [at(l, 0, 0), at(l, sz - 1, 0), at(l, sz - 1, sz - 1), at(l, 0, sz - 1)];
-      var mx = 0, my = 0;
-      corners.forEach(function (n) { mx += n.x / 4; my += n.y / 4; });
-      var grow = 1 + (ux * 0.55) / Math.max(1, ux * (sz - 1));
-      ctx.beginPath();
-      corners.forEach(function (n, q) {
-        var x = mx + (n.x - mx) * grow, y = my + (n.y - my) * grow;
-        if (q === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      });
-      ctx.closePath();
-      ctx.globalAlpha = 0.014 * v; ctx.fillStyle = LAYERS[l]; ctx.fill();
-      ctx.globalAlpha = 0.06 * v; ctx.strokeStyle = LAYERS[l]; ctx.lineWidth = 0.75; ctx.stroke();
-      ctx.globalAlpha = 1;
-    }
-
-    ctx.lineCap = 'round';
-    function edge(l2, a, b, v2) {
-      ctx.lineWidth = 0.75;
-      ctx.strokeStyle = 'rgba(23,23,23,' + (EDGE_ALPHA[l2] * v2).toFixed(3) + ')';
-      ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(nodes[b].x, nodes[b].y); ctx.stroke();
-      var h = (edgeHeat[ekey(a, b)] || 0) * v2;
-      if (h > 0.02) {
-        ctx.lineWidth = 1.2;
-        ctx.strokeStyle = 'rgba(191,35,48,' + Math.min(0.95, 1.5 * h).toFixed(3) + ')';
-        ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(nodes[b].x, nodes[b].y); ctx.stroke();
-      }
-    }
-    for (l = 0; l < 3; l++) {
-      sz = SIZES[l]; v = vis(l);
-      for (var a = 0; a < sz; a++) for (var b = 0; b < sz; b++) {
-        if (a < sz - 1) edge(l, key(l, a, b), key(l, a + 1, b), v);
-        if (b < sz - 1) edge(l, key(l, a, b), key(l, a, b + 1), v);
-      }
-    }
-
-    nodes.forEach(function (n, idx) {
-      var nv = vis(n.L);
-      ctx.globalAlpha = Math.min(1, NODE_ALPHA[n.L] * nv);
-      ctx.fillStyle = LAYERS[n.L];
-      ctx.fillRect(n.x - 2.2, n.y - 2.2, 4.4, 4.4);
-      ctx.globalAlpha = 1;
-      var h = nodeHeat[idx] * nv;
-      if (h > 0.03) {
-        ctx.fillStyle = 'rgba(191,35,48,' + (0.95 * h).toFixed(3) + ')';
-        ctx.fillRect(n.x - 2.6, n.y - 2.6, 5.2, 5.2);
-      }
-    });
-
-    // the disruption itself, riding the hop it is making now
-    var na = nodes[walk[step]], nbb = nodes[walk[(step + 1) % WALK]];
-    if (na && nbb) {
-      var e = p * p * (3 - 2 * p);
-      var fade = Math.sin(Math.min(1, p) * Math.PI) * vis(p < 0.5 ? na.L : nbb.L);
-      ctx.fillStyle = 'rgba(191,35,48,' + (0.85 * fade).toFixed(3) + ')';
-      ctx.fillRect(na.x + (nbb.x - na.x) * e - 1.6, na.y + (nbb.y - na.y) * e - 1.6, 3.2, 3.2);
-    }
-
-  }
-
-  // ── Run only while the figure is on screen; hold still if asked to ──
-  var raf = 0, running = false, t0 = 0, last = 0;
-  function frame(now) {
-    if (!running) return;
-    raf = requestAnimationFrame(frame);
-    if (now - last < 32) return;               // ~30 frames a second is plenty for one hop per 0.9s
-    last = now;
-    paint(Math.max(0, (now - t0) / 1000));
-  }
-  function start() {
-    if (still) { paint(3.2); return; }
-    if (running) return;
-    running = true;
-    if (!t0) t0 = performance.now();
-    raf = requestAnimationFrame(frame);
-  }
-  function stop() { running = false; cancelAnimationFrame(raf); }
-
-  if ('IntersectionObserver' in window) {
-    // The strip under the sticky bar does not count as "on screen".
-    new IntersectionObserver(function (entries) {
-      if (entries[entries.length - 1].isIntersecting) start(); else stop();
-    }, { rootMargin: '-' + (bar.offsetHeight + 8) + 'px 0px 0px 0px' }).observe(cvs);
-  } else {
-    start();
-  }
-  // The copy moves when the window does, and again when the web fonts land.
-  window.addEventListener('resize', replace);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(replace);
-  var photo = hero.querySelector('.portrait img');
-  if (photo && !photo.complete) photo.addEventListener('load', replace);
-}
-
 route(true);
 init();
-try { lattice($('lattice')); } catch (e) { console.warn('Hero figure unavailable', e); }
 
 })();
 </script>

@@ -2,7 +2,7 @@
 
 Drop a paper's PDF in this folder, then point a publication entry at it from
 `cv-data/ref.bib` using a `pdf` field. The website turns that into two
-buttons under the entry: **View PDF** (opens it in a new tab, so the link can
+links under the entry: **View PDF** (opens it in a new tab, so the address can
 be shared) and **Download**.
 
 Example (a working paper under review):
